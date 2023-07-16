@@ -1,8 +1,14 @@
-import { FcGoogle } from "react-icons/fc";
+import { modalClose } from "@/redux/modalSlice";
+import { RootState } from "@/redux/modalStore";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+import { useDispatch, useSelector } from "react-redux";
 
 function Authentication() {
+  const modal = useSelector((state: RootState) => state.modal.value);
+  const dispatch = useDispatch();
+
   return (
     <div className="auth__wrapper">
       <div className="auth">
@@ -48,8 +54,11 @@ function Authentication() {
         </div>
         <div className="auth__forgot--password">Forgot your password?</div>
         <button className="no__account--btn">Don't have an account?</button>
-        <div className="auth__close--btn">
-          <AiOutlineClose className="auth__close--icon" />
+        <div className="auth__close--btn"
+        onClick={() => {
+          dispatch(modalClose())
+        }}>
+          <AiOutlineClose className="auth__close--icon"/>
         </div>
       </div>
     </div>

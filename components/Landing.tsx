@@ -1,7 +1,13 @@
+import { modalOpen } from "@/redux/modalSlice";
+import { RootState } from "@/redux/modalStore";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
 import LandingImage from "../assets/landing.png";
 
 function Landing() {
+  const modal = useSelector((state: RootState) => state.modal.value);
+  const dispatch = useDispatch();
+
   return (
     <section id="landing">
       <div className="container">
@@ -19,7 +25,14 @@ function Landing() {
                 <br className="remove--tablet" />
                 and even people who don’t like to read.
               </div>
-              <button className="btn home__cta--btn">Login</button>
+              <button
+                className="btn home__cta--btn"
+                onClick={() => {
+                  dispatch(modalOpen())
+                }}
+              >
+                Login
+              </button>
             </div>
             <figure className="landing__image--mask">
               <Image src={LandingImage} alt="landing" />

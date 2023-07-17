@@ -1,6 +1,8 @@
+import useAuth from "@/hooks/useAuth";
 import { modalClose } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +15,8 @@ function Authentication() {
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
 
+  const { signIn, signUp } = useAuth();
+
   return (
     <div className="auth__wrapper">
       <div className="auth">
@@ -21,7 +25,10 @@ function Authentication() {
             <div className="auth__content">
               <div className="auth__header">Reset your password</div>
 
-              <form action="" className="auth__form">
+              <form
+                action=""
+                className="auth__form"
+              >
                 <input
                   type="text"
                   className="auth__input"
@@ -67,18 +74,22 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form action="" className="auth__form">
+              <form
+                action=""
+                className="auth__form"
+              >
                 <input
                   type="text"
                   className="auth__input"
                   placeholder="Email Address"
                 />
+               
                 <input
                   type="password"
                   className="auth__input"
                   placeholder="Password"
                 />
-
+               
                 <button className="btn">
                   <span>Login</span>
                 </button>
@@ -112,18 +123,22 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form action="" className="auth__form">
+              <form
+                action=""
+                className="auth__form"
+              >
                 <input
                   type="text"
                   className="auth__input"
                   placeholder="Email Address"
                 />
+               
                 <input
                   type="password"
                   className="auth__input"
                   placeholder="Password"
                 />
-
+               
                 <button className="btn">
                   <span>Sign Up</span>
                 </button>

@@ -7,7 +7,8 @@ import {
   signOut,
 } from "firebase/auth";
 import { useRouter } from "next/router";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+
 
 interface IAuth {
   user: User | null;
@@ -45,13 +46,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (user) {
           // user logged in
           setUser(user);
-
           setLoading(false);
         } else {
           // user not logged in
           setUser(null);
           setLoading(true);
-          router.push("/login"); // NEED TO REVISE
+          router.push("/"); // NEED TO REVISE
         }
 
         // setInitialLoading(false);
@@ -112,3 +112,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
   );
 };
+
+export default function useAuth() {
+  return useContext(AuthContext);
+}

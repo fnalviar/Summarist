@@ -8,6 +8,11 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 
+interface Inputs {
+  email: string;
+  password: string;
+}
+
 function Authentication() {
   const [login, setLogin] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
@@ -17,6 +22,20 @@ function Authentication() {
 
   const { signIn, signUp } = useAuth();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
+    if (login) {
+      await signIn(email, password);
+    } else {
+      await signUp(email, password);
+    }
+  };
+
   return (
     <div className="auth__wrapper">
       <div className="auth">
@@ -25,14 +44,12 @@ function Authentication() {
             <div className="auth__content">
               <div className="auth__header">Reset your password</div>
 
-              <form
-                action=""
-                className="auth__form"
-              >
+              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
                 <input
                   type="text"
                   className="auth__input"
                   placeholder="Email Address"
+                  {...register("email", { required: true })}
                 />
                 <button className="btn">
                   <span>Send reset password link</span>
@@ -74,22 +91,26 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form
-                action=""
-                className="auth__form"
-              >
+              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
                 <input
                   type="text"
                   className="auth__input"
                   placeholder="Email Address"
+                  {...register("email", { required: true })}
                 />
-               
+
                 <input
                   type="password"
                   className="auth__input"
                   placeholder="Password"
+                  {...register("password", { required: true })}
                 />
-               
+                {errors.password && (
+                  <p className="p-1 text-[13px] font-light  text-orange-500">
+                    Your password must contain between 4 and 60 characters.
+                  </p>
+                )}
+
                 <button className="btn">
                   <span>Login</span>
                 </button>
@@ -123,22 +144,26 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form
-                action=""
-                className="auth__form"
-              >
+              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
                 <input
                   type="text"
                   className="auth__input"
                   placeholder="Email Address"
+                  {...register("email", { required: true })}
                 />
-               
+
                 <input
                   type="password"
                   className="auth__input"
                   placeholder="Password"
+                  {...register("password", { required: true })}
                 />
-               
+                {errors.password && (
+                  <p className="p-1 text-[13px] font-light  text-orange-500">
+                    Your password must contain between 4 and 60 characters.
+                  </p>
+                )}
+
                 <button className="btn">
                   <span>Sign Up</span>
                 </button>
@@ -164,3 +189,10 @@ function Authentication() {
   );
 }
 export default Authentication;
+
+function signIn(
+  email: Inputs,
+  password: import("react").BaseSyntheticEvent<object, any, any> | undefined
+) {
+  throw new Error("Function not implemented.");
+}

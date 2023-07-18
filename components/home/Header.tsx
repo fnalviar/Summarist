@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "../assets/logo.png";
+import Logo from "../../assets/logo.png";
 import { RootState } from "@/redux/modalStore";
 import { useDispatch, useSelector } from "react-redux";
 import { modalOpen } from "@/redux/modalSlice";

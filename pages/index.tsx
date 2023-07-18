@@ -1,10 +1,10 @@
 import Authentication from "@/components/Authentication";
-import Features from "@/components/Features";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Landing from "@/components/Landing";
-import Numbers from "@/components/Numbers";
-import Reviews from "@/components/Reviews";
+import Features from "@/components/home/Features";
+import Footer from "@/components/home/Footer";
+import Header from "@/components/home/Header";
+import Landing from "@/components/home/Landing";
+import Numbers from "@/components/home/Numbers";
+import Reviews from "@/components/home/Reviews";
 import { RootState } from "@/redux/modalStore";
 import Head from "next/head";
 import { useSelector } from "react-redux";

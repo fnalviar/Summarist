@@ -2,7 +2,7 @@ import { modalOpen } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import LandingImage from "../assets/landing.png";
+import LandingImage from "../../assets/landing.png";
 
 function Landing() {
   const modal = useSelector((state: RootState) => state.modal.value);

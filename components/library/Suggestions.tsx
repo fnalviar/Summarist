@@ -1,6 +1,11 @@
+import { Book } from "@/types";
 import BookCard from "../UI/BookCard";
 
-function Suggestions() {
+interface Props {
+  suggestedBooks: Book[]
+}
+
+function Suggestions({ suggestedBooks } : Props) {
   return (
     <div>
       <div className="section__header__title">Suggested Books</div>

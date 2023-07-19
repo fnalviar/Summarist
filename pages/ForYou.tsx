@@ -1,20 +1,40 @@
-import { RootState } from "@/redux/modalStore";
-import {
-  AiOutlineMenu,
-  AiOutlineSearch
-} from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
 import useAuth from "@/hooks/useAuth";
+import { Book } from "@/types";
+import requests from "@/utils/requests";
+import axios from "axios";
+import { useEffect } from "react";
 
-function ForYou() {
-  const modal = useSelector((state: RootState) => state.modal.value);
-  const dispatch = useDispatch();
-  const { user, logout } = useAuth();
+interface Props {
+  selectedBook: Book;
+  recommendedBooks: Book[];
+  suggestedBooks: Book[];
+}
+
+const ForYou = ({ selectedBook, recommendedBooks, suggestedBooks }: Props) => {
+  const { user, loading } = useAuth();
+
+  async function fetchBooks() {
+    const selectedBook = (await axios.get(requests.fetchSelectedBook)).data[0];
+    const recommendedBooks = (await axios.get(requests.fetchRecommendedBooks))
+      .data;
+    const suggestedBooks = (await axios.get(requests.fetchSuggestedBooks)).data;
+
+    console.log("selectedBook", selectedBook);
+    console.log("recommendedBooks", recommendedBooks);
+    console.log("suggestedBooks", suggestedBooks);
+  }
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
   if (!user) return null;
+
+  if (loading === null) return null;
 
   return (
     <div id="foryou">
@@ -43,9 +63,13 @@ function ForYou() {
         <div className="sidebar__overlay sidebar__overlay--hidden"></div>
 
         <Sidebar />
-        <SelectedBooks />
+        <SelectedBooks
+          selectedBook={selectedBook}
+          recommendedBooks={recommendedBooks}
+          suggestedBooks={suggestedBooks}
+        />
       </div>
     </div>
   );
-}
+};
 export default ForYou;

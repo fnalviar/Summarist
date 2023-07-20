@@ -8,7 +8,12 @@ interface Props {
   recommendedBooks: Book[];
 }
 
+
 function Recommendations({recommendedBooks} : Props) {
+  console.log("recommendedBooks at Recommendations component", recommendedBooks)
+
+  if( recommendedBooks === undefined) return null;
+
   return (
     <div>
       <div className="section__header__title">Recommended For You</div>

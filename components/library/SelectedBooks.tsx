@@ -5,6 +5,7 @@ import Image from "next/image";
 import Suggestions from "./Suggestions";
 import { Book } from "@/types";
 import useAuth from "@/hooks/useAuth";
+import BookCard from "../UI/BookCard";
 
 interface Props {
   selectedBook: Book;
@@ -19,9 +20,11 @@ function SelectedBooks({
 }: Props) {
   const { loading } = useAuth();
 
-  // if (selectedBook === undefined) return null;
+  if (loading === null) return null;
 
-  console.log("selectedBook at SelectedBooks component", selectedBook)
+  console.log("selectedBook at SelectedBooks component", selectedBook);
+  console.log("recommendedBooks at SelectedBooks component", recommendedBooks);
+  console.log("suggestedBooks at SelectedBooks component", suggestedBooks);
 
   return (
     <div className="row">
@@ -58,8 +61,18 @@ function SelectedBooks({
               </div>
             </div>
           </a>
-          <Recommendations recommendedBooks={recommendedBooks} />
-          <Suggestions suggestedBooks={suggestedBooks} />
+          <div>
+            <div className="section__header__title">Recommended For You</div>
+            <div className="section__header__subtitle">
+              We think you’ll like these
+            </div>
+            <BookCard />
+          </div>
+          <div>
+            <div className="section__header__title">Suggested Books</div>
+            <div className="section__header__subtitle">Browse those books</div>
+            <BookCard />
+          </div>
         </div>
       </div>
     </div>

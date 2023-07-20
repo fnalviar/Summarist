@@ -6,6 +6,8 @@ interface Props {
 }
 
 function Suggestions({ suggestedBooks } : Props) {
+  console.log("suggestedBooks at Suggestions component", suggestedBooks)
+
   return (
     <div>
       <div className="section__header__title">Suggested Books</div>

@@ -940,9 +940,16 @@ button:disabled {
   display: flex;
   overflow-x: auto;
   gap: 16px;
-  scroll-snap-type: mandatory;
-  scroll-snap-type: x;
+  scroll-snap-type: x mandatory;
   margin-bottom: 32px;
+}
+
+.recommended--books__container::-webkit-scrollbar {
+  display: none;
+}
+
+.recommended--books__container a:hover {
+  background-color: #f1f6f4;
 }
 
 .recommended--books--link {
@@ -1024,12 +1031,11 @@ button:disabled {
 /* 
   RESPONSIVE DESIGN
  */
- @media (max-width: 1200px) {
+@media (max-width: 1200px) {
   .selected__book {
     width: 100%;
   }
- }
-
+}
 
 @media (max-width: 768px) {
   .landing__content {

@@ -66,7 +66,7 @@ const ForYou = () => {
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBackground />
-        <div className="sidebar__overlay sidebar__overlay--hidden"></div>
+        {/* <div className="sidebar__overlay sidebar__overlay--hwidden"></div> */}
 
         <Sidebar />
         <div className="row">
@@ -114,14 +114,14 @@ const ForYou = () => {
                 <div className="section__header__subtitle">
                   We think you’ll like these
                 </div>
-                <BookCard />
+                <BookCard books={recommendedBooks}/>
               </div>
               <div>
                 <div className="section__header__title">Suggested Books</div>
                 <div className="section__header__subtitle">
                   Browse those books
                 </div>
-                <BookCard />
+                <BookCard books={suggestedBooks}/>
               </div>
             </div>
           </div>

@@ -1,21 +1,13 @@
-import { BsPlayFill } from "react-icons/bs";
-import BookCard from "@/components/UI/BookCard";
+import BooksCard from "@/components/UI/BooksCard";
 import SearchBackground from "@/components/library/SearchBackground";
 import Sidebar from "@/components/library/Sidebar";
 import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
-import Image from "next/image";
-import axios from "axios";
 import requests from "@/utils/requests";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { BsPlayFill } from "react-icons/bs";
 
-// interface Props {
-//   selectedBook: Book;
-//   recommendedBooks: Book[];
-//   suggestedBooks: Book[];
-// }
-
-// const ForYou = ({ selectedBook, recommendedBooks, suggestedBooks }: Props) => {
 const ForYou = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -39,9 +31,9 @@ const ForYou = () => {
       setRecommendedBooks(recommendedBooksResponse);
       setSuggestedBooks(suggestedBooksResponse);
 
-      console.log(selectedBookResponse);
-      console.log(recommendedBooksResponse);
-      console.log(suggestedBooksResponse);
+      console.log("selectedBookResponse", selectedBookResponse);
+      console.log("recommendedBooksResponse", recommendedBooksResponse);
+      console.log("suggestedBooksResponse", suggestedBooksResponse);
     } catch (error) {
       console.log(error);
     } finally {
@@ -62,11 +54,10 @@ const ForYou = () => {
   }, []);
 
   return (
-    // !loading && (
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBackground />
-        <div className="sidebar__overlay sidebar__overlay--hidden"></div>
+        {/* <div className="sidebar__overlay sidebar__overlay--hwidden"></div> */}
 
         <Sidebar />
         <div className="row">
@@ -114,21 +105,20 @@ const ForYou = () => {
                 <div className="section__header__subtitle">
                   We think you’ll like these
                 </div>
-                <BookCard />
+                <BooksCard books={recommendedBooks}/>
               </div>
               <div>
                 <div className="section__header__title">Suggested Books</div>
                 <div className="section__header__subtitle">
                   Browse those books
                 </div>
-                <BookCard />
+                <BooksCard books={suggestedBooks}/>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    // )
   );
 };
 

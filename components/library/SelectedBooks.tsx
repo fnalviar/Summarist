@@ -5,7 +5,7 @@ import Image from "next/image";
 import Suggestions from "./Suggestions";
 import { Book } from "@/types";
 import useAuth from "@/hooks/useAuth";
-import BookCard from "../UI/BookCard";
+import BookCard from "../UI/BooksCard";
 
 interface Props {
   selectedBook: Book;

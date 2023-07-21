@@ -948,7 +948,7 @@ button:disabled {
   display: none;
 }
 
-.recommended--books__container a:hover {
+.recommended--books__container div:hover {
   background-color: #f1f6f4;
 }
 

@@ -14,7 +14,6 @@ function BooksCard({ books }: Props) {
         <Link href={`/book/${book.id}`} key={book.id}>
           <div
             className="recommended--books--link"
-            // key={book.id}
           >
             {book.subscriptionRequired && (
               <div className="book--premium">Premium</div>

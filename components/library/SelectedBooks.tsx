@@ -1,11 +1,8 @@
-import { BsPlayFill } from "react-icons/bs";
-import Recommendations from "./Recommendations";
-import BookImage from "../../assets/book-4.jpeg";
-import Image from "next/image";
-import Suggestions from "./Suggestions";
-import { Book } from "@/types";
 import useAuth from "@/hooks/useAuth";
-import BookCard from "../UI/BooksCard";
+import { Book } from "@/types";
+import Image from "next/image";
+import { BsPlayFill } from "react-icons/bs";
+import BooksCard from "../UI/BooksCard";
 
 interface Props {
   selectedBook: Book;
@@ -21,10 +18,6 @@ function SelectedBooks({
   const { loading } = useAuth();
 
   if (loading === null) return null;
-
-  console.log("selectedBook at SelectedBooks component", selectedBook);
-  console.log("recommendedBooks at SelectedBooks component", recommendedBooks);
-  console.log("suggestedBooks at SelectedBooks component", suggestedBooks);
 
   return (
     <div className="row">
@@ -66,12 +59,12 @@ function SelectedBooks({
             <div className="section__header__subtitle">
               We think you’ll like these
             </div>
-            <BookCard />
+            <BooksCard books={recommendedBooks}/>
           </div>
           <div>
             <div className="section__header__title">Suggested Books</div>
             <div className="section__header__subtitle">Browse those books</div>
-            <BookCard />
+            <BooksCard books={suggestedBooks}/>
           </div>
         </div>
       </div>

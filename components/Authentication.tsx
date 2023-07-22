@@ -126,7 +126,7 @@ function Authentication() {
               className="no__account--btn"
               onClick={() => setLogin(false)}
             >
-              Don't have an account?
+             {" Don't have an account?"}
             </button>
           </>
         ) : (

@@ -38,7 +38,7 @@ function BookDetail() {
 
   useEffect(() => {
     fetchBook();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;

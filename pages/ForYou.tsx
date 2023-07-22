@@ -30,23 +30,11 @@ const ForYou = () => {
       setSelectedBook(selectedBookResponse);
       setRecommendedBooks(recommendedBooksResponse);
       setSuggestedBooks(suggestedBooksResponse);
-
-      console.log("selectedBookResponse", selectedBookResponse);
-      console.log("recommendedBooksResponse", recommendedBooksResponse);
-      console.log("suggestedBooksResponse", suggestedBooksResponse);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-
-    return {
-      props: {
-        selectedBook,
-        recommendedBooks,
-        suggestedBooks,
-      },
-    };
   }
 
   useEffect(() => {
@@ -105,14 +93,14 @@ const ForYou = () => {
                 <div className="section__header__subtitle">
                   We think you’ll like these
                 </div>
-                <BooksCard books={recommendedBooks}/>
+                <BooksCard books={recommendedBooks} />
               </div>
               <div>
                 <div className="section__header__title">Suggested Books</div>
                 <div className="section__header__subtitle">
                   Browse those books
                 </div>
-                <BooksCard books={suggestedBooks}/>
+                <BooksCard books={suggestedBooks} />
               </div>
             </div>
           </div>

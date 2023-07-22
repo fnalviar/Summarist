@@ -4,6 +4,7 @@ const requests = {
     fetchSelectedBook : `${BASE_URL}status=selected`,
     fetchRecommendedBooks : `${BASE_URL}status=recommended`,
     fetchSuggestedBooks : `${BASE_URL}status=suggested`,
+    fetchBook : (id: string) => `${BASE_URL}id=${id}`
 }
 
 export default requests

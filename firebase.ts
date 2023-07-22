@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCwxfq39i0X14I6rglBnKEBEERPOYzRgG8",
-  authDomain: "summarist-bd567.firebaseapp.com",
-  projectId: "summarist-bd567",
-  storageBucket: "summarist-bd567.appspot.com",
-  messagingSenderId: "320109463951",
-  appId: "1:320109463951:web:2f34b5178a7976c8cee3fa"
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 // Initialize Firebase

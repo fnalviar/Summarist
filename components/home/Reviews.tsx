@@ -21,9 +21,9 @@ function Reviews() {
                 </div>
               </div>
               <div className="review__body">
-                This app has been a <b>game-changer</b> for me! It's saved me so
-                much time and effort in reading and comprehending books. Highly
-                recommend it to all book lovers.
+                This app has been a <b>game-changer</b>
+                for me! {"It's"} saved me so much time and effort in reading and
+                comprehending books. Highly recommend it to all book lovers.
               </div>
             </div>
             <div className="review">
@@ -36,7 +36,8 @@ function Reviews() {
               <div className="review__body">
                 I love this app! It provides
                 <b>concise and accurate summaries</b> of books in a way that is
-                easy to understand. It's also very user-friendly and intuitive.
+                easy to understand.{" "}
+                {"It's also very user-friendly and intuitive."}
               </div>
             </div>
             <div className="review">
@@ -61,18 +62,22 @@ function Reviews() {
                 </div>
               </div>
               <div className="review__body">
-                If you're a busy person who
-                <b>loves reading but doesn't have the time</b> to read every
+                {" If you're a busy person who"}
+                <b>loves reading but {"doesn't"} have the time</b> to read every
                 book in full, this app is for you! The summaries are thorough
-                and provide a great overview of the book's content.
+                and provide a great overview of the {"book's"} content.
               </div>
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button className="btn home__cta--btn"
-                onClick={() => {
-                    dispatch(modalOpen())
-                }}>Login</button>
+            <button
+              className="btn home__cta--btn"
+              onClick={() => {
+                dispatch(modalOpen());
+              }}
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>

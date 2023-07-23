@@ -5,7 +5,7 @@ import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
 
 interface Props {
-  selectedBook: Book;
+  selectedBook: Book | null;
   recommendedBooks: Book[];
   suggestedBooks: Book[];
 }
@@ -31,8 +31,8 @@ function SelectedBooks({
             </div>
             <div className="selected__book--separator"></div>
             <div className="selected__book--content">
-              <figure className="book__image--wrapper">
-                <Image
+              <figure className="selected--book__image--wrapper">
+                <img
                   src={selectedBook?.imageLink}
                   alt="Book"
                   className="book__img"
@@ -57,14 +57,14 @@ function SelectedBooks({
           <div>
             <div className="section__header__title">Recommended For You</div>
             <div className="section__header__subtitle">
-              We think you’ll like these
+              We think {"you’ll"} like these
             </div>
-            <BooksCard books={recommendedBooks}/>
+            <BooksCard books={recommendedBooks} />
           </div>
           <div>
             <div className="section__header__title">Suggested Books</div>
             <div className="section__header__subtitle">Browse those books</div>
-            <BooksCard books={suggestedBooks}/>
+            <BooksCard books={suggestedBooks} />
           </div>
         </div>
       </div>

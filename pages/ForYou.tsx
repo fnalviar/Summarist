@@ -1,3 +1,6 @@
+import Audio from "@/components/UI/Audio";
+import BookCard from "@/components/UI/BookCard";
+import Summary from "@/components/UI/Summary";
 import SearchBackground from "@/components/library/SearchBackground";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
@@ -43,10 +46,13 @@ const ForYou = () => {
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBackground />
-        {/* <div className="sidebar__overlay sidebar__overlay--hwidden"></div> */}
 
         <Sidebar />
-        <SelectedBooks selectedBook={selectedBook} recommendedBooks={recommendedBooks} suggestedBooks={recommendedBooks} />
+        <SelectedBooks
+          selectedBook={selectedBook}
+          recommendedBooks={recommendedBooks}
+          suggestedBooks={recommendedBooks}
+        />
       </div>
     </div>
   );

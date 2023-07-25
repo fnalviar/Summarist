@@ -1,10 +1,6 @@
-import Audio from "@/components/UI/Audio";
-import BookCard from "@/components/UI/BookCard";
-import Summary from "@/components/UI/Summary";
 import SearchBackground from "@/components/library/SearchBackground";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
-import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";

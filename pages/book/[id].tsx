@@ -7,32 +7,26 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-interface Props {
-  books: Book[];
-}
-
 function BookDetail() {
   const router = useRouter();
-  // const { id } = router.query;
-  const id = "2l0idxm1rvw";
-  const [book, setBook] = useState<Book | null>(null);
+  const { id } = router.query;
+  const [bookSummary, setBookSummary] = useState<Book | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const BOOK_URL = `https://us-central1-summaristt.cloudfunctions.net/getBooks?id=${id}`;
 
   console.log(id);
 
   async function fetchBook() {
     setLoading(true);
     try {
-      // const getBookResponse = (await axios.get(BOOK_URL)).data;
-      // const getBookResponse = (await axios.get(requests.fetchBook(id as string))).data;
-      //   const response = await fetch(requests.fetchBook(id as string));
-      const response = await fetch(BOOK_URL);
-      const getBookResponse = await response.json();
-      setBook(getBookResponse);
+      const getBookResponse = (
+        await axios.get(requests.fetchBook(id as string))
+      ).data;
+      setBookSummary(getBookResponse);
 
-      console.log("getBookResponse", getBookResponse);
+      console.log("response", getBookResponse);
+
+      const { audioLink } = getBookResponse.audioLink;
+      console.log(audioLink);
     } catch (error) {
       console.log(error);
     } finally {
@@ -48,7 +42,7 @@ function BookDetail() {
     return <div>Loading...</div>;
   }
 
-  if (!book) {
+  if (!bookSummary) {
     return <div>Book not found!</div>;
   }
 
@@ -57,7 +51,7 @@ function BookDetail() {
       <div className="content--wrapper">
         <SearchBackground />
         <Sidebar />
-        <BookCard />
+        <BookCard bookSummary={bookSummary} />
       </div>
     </div>
   );

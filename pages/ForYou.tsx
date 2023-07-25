@@ -1,7 +1,6 @@
 import SearchBackground from "@/components/library/SearchBackground";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
-import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";
@@ -43,10 +42,13 @@ const ForYou = () => {
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBackground />
-        {/* <div className="sidebar__overlay sidebar__overlay--hwidden"></div> */}
 
         <Sidebar />
-        <SelectedBooks selectedBook={selectedBook} recommendedBooks={recommendedBooks} suggestedBooks={recommendedBooks} />
+        <SelectedBooks
+          selectedBook={selectedBook}
+          recommendedBooks={recommendedBooks}
+          suggestedBooks={recommendedBooks}
+        />
       </div>
     </div>
   );

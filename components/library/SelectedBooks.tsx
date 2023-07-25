@@ -1,6 +1,6 @@
+import useAudioDuration from "@/hooks/useAudioDuration";
 import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
-import Image from "next/image";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
 
@@ -16,6 +16,8 @@ function SelectedBooks({
   suggestedBooks,
 }: Props) {
   const { loading } = useAuth();
+  const { audioDurationMinutes } = useAudioDuration(selectedBook);
+  const { audioDurationSeconds } = useAudioDuration(selectedBook);
 
   if (loading === null) return null;
 
@@ -24,7 +26,7 @@ function SelectedBooks({
       <div className="container">
         <div className="selected__book__container">
           <div className="section__header__title">Selected just for you</div>
-          <audio src=""></audio>
+          <audio src={selectedBook?.audioLink}></audio>
           <a href="" className="selected__book">
             <div className="selected__book--subtitle">
               {selectedBook?.subTitle}
@@ -49,7 +51,12 @@ function SelectedBooks({
                   <div className="selected__book--icon">
                     <BsPlayFill className="play--icon" />
                   </div>
-                  <div className="selected__book--duration">1 mins 30 secs</div>
+                  <div className="selected__book--duration">
+                    {audioDurationMinutes.toLocaleString("en-US", {
+                      minimumIntegerDigits: 2,
+                    })}{" "}
+                    mins {audioDurationSeconds.toLocaleString("en-US", { minimumIntegerDigits: 2 })} secs
+                  </div>
                 </div>
               </div>
             </div>

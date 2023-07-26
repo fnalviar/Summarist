@@ -26,7 +26,7 @@ function Landing() {
                 and even people who don’t like to read.
               </div>
               <button
-                className="btn home__cta--btn"
+                className="btn login--btn"
                 onClick={() => {
                   dispatch(modalOpen())
                 }}

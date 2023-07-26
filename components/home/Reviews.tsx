@@ -71,7 +71,7 @@ function Reviews() {
           </div>
           <div className="reviews__btn--wrapper">
             <button
-              className="btn home__cta--btn"
+              className="btn login--btn"
               onClick={() => {
                 dispatch(modalOpen());
               }}

@@ -34,7 +34,48 @@ function PlanContent() {
               collections curated by experts
             </div>
           </div>
-          <div className="section__title">Choose the plan that fits you</div>
+        </div>
+
+        <div className="section__title">Choose the plan that fits you</div>
+
+        <div className="plan__card plan__card--active">
+          <div className="plan__card--circle">
+            <div className="plan__card--dot"></div>
+          </div>
+          <div className="plan__card--content">
+            <div className="plan__card--title">Premium Plus Yearly</div>
+            <div className="plan__card--price">$99.99/year</div>
+            <div className="plan__card--description">
+              7-day free trial included
+            </div>
+          </div>
+        </div>
+
+        <div className="auth__separator plan__card--separator">
+          <span className="auth__separator--text">or</span>
+        </div>
+
+        <div className="plan__card">
+          <div className="plan__card--circle">
+            <div className="plan__card--dot"></div>
+          </div>
+          <div className="plan__card--content">
+            <div className="plan__card--title">Premium Monthly</div>
+            <div className="plan__card--price">$9.99/month</div>
+            <div className="plan__card--description">No trial included</div>
+          </div>
+        </div>
+
+        <div className="plan__card--trial">
+          <span className="plan__btn--container">
+            <button className="btn plan__btn">
+              <span>Start your free 7-day trial</span>
+            </button>
+          </span>
+          <div className="plan__disclaimer">
+            Cancel your trial at any time before it ends, and you won’t be
+            charged.
+          </div>
         </div>
       </div>
     </div>

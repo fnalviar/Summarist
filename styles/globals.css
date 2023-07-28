@@ -1474,6 +1474,88 @@ button:disabled {
   line-height: 1.5;
 }
 
+.plan__card {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background-color: #f1f6f4;
+  border: 4px solid #bac8ce;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.plan__card--active {
+  border: 4px solid #2be080;
+}
+
+.plan__card--circle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan__card--dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.plan__card--title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #032b41;
+  margin-bottom: 8px;
+}
+
+.plan__card--price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #032b41;
+  margin-bottom: 8px;
+}
+
+.plan__card--description {
+  color: #6b757b;
+  font-size: 14px;
+}
+
+.plan__card--separator {
+  max-width: 260px;
+  margin: 24px auto;
+}
+
+.plan__card--trial {
+  background: #fff;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.plan__btn--container {
+  width: 300px;
+}
+
+.plan__disclaimer {
+  font-size: 12px;
+  color: #6b757b;
+  text-align: center;
+}
+
 /* 
   RESPONSIVE DESIGN
  */

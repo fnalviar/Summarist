@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           // user not logged in
           setUser(null);
           setLoading(true);
-          router.push("/"); // NEED TO REVISE
+          // router.push("/"); // NEED TO REVISE
         }
 
         // setInitialLoading(false);
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        router.push("/ForYou"); // routes the users to the home page after login
+        router.push("/for-you"); // routes the users to the home page after login
         setLoading(false);
       })
       .catch((error) => alert(error.message))
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        router.push("/ForYou"); // routes the users to the home page after login
+        router.push("/for-you"); // routes the users to the home page after login
         setLoading(false);
       })
       .catch((error) => alert(error.message))

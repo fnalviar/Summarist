@@ -20,7 +20,7 @@ function useSubscription(user: User | null) {
             subscription.status === "trialing"
         )[0]
       );
-    });
+    }); 
   }, [user]);
 
   return subscription;

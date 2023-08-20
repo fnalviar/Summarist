@@ -1566,7 +1566,8 @@ button:disabled {
   overflow: hidden;
 }
 
-.accordion__header {
+.accordion__header,
+#panel1a-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1601,8 +1602,8 @@ button:disabled {
 
 .accordion__collapse {
   position: relative;
-  height: 0;
-  overflow: hidden;
+  /* height: 0; */
+  /* overflow: hidden; */
   transition: height 0.55s ease;
 }
 

@@ -1,8 +1,18 @@
+import useAuth from "@/hooks/useAuth";
+import useSubscription from "@/hooks/useSubscription";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";
+import Authentication from "../Authentication";
 
 function PlanContent() {
+  // const { loading, user } = useAuth(); //error: unexpected token export
+  // const subscription = useSubscription(user);
+
+  // if (loading || subscription === null) return null;
+
+  // if(!subscription) return <Authentication />
+  
   return (
     <div className="row">
       <div className="container">
@@ -70,11 +80,15 @@ function PlanContent() {
           <span className="plan__btn--container">
             <button className="btn plan__btn">
               <span>Start your free 7-day trial</span>
+              <span>Start your first month</span>
             </button>
           </span>
           <div className="plan__disclaimer">
             Cancel your trial at any time before it ends, and you won’t be
             charged.
+          </div>
+          <div className="plan__disclaimer">
+            30-day money back guarantee, no questions asked.
           </div>
         </div>
       </div>

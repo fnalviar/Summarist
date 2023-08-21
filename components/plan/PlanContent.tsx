@@ -3,15 +3,16 @@ import useSubscription from "@/hooks/useSubscription";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";
-import Authentication from "../Authentication";
 
 function PlanContent() {
-  // const { loading, user } = useAuth(); //error: unexpected token export
-  // const subscription = useSubscription(user);
+  const { user, logout, loading } = useAuth(); //error: unexpected token export
+  const subscription = useSubscription(user);
 
-  // if (loading || subscription === null) return null;
+  if (loading || subscription === null) return null;
 
-  // if(!subscription) return <Authentication />
+  if (user) {
+    return <p>Welcome, {user.email}!</p>;
+  }
   
   return (
     <div className="row">

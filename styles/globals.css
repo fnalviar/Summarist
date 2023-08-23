@@ -1560,19 +1560,21 @@ button:disabled {
   ACCORDION
 */
 
-.accordion__card {
+.accordion__card{
+  border: 0px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 8px;
   overflow: hidden;
+  background-color: #fff;
+  box-shadow: none;
 }
 
-.accordion__header,
-#panel1a-header {
+.accordion__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding: 24px 0;
+  padding: 18px 0;
   gap: 8px;
 }
 
@@ -1583,6 +1585,10 @@ button:disabled {
   margin-bottom: 0;
   color: #032b41;
   transition: 0.3s;
+}
+
+.accordion__collapse {
+  padding: 0px 0px 24px 0px;
 }
 
 .arrow-down__icon {

@@ -1,19 +1,22 @@
 import useAuth from "@/hooks/useAuth";
 import useSubscription from "@/hooks/useSubscription";
+import payments from "@/lib/stripe";
+import { Product, getProducts } from "@stripe/firestore-stripe-payments";
+import { useState } from "react";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";
 
-function PlanContent() {
-  const { user, logout, loading } = useAuth(); //error: unexpected token export
-  const subscription = useSubscription(user);
+interface Props {
+  products: Product[];
+}
 
-  if (loading || subscription === null) return null;
+function PlanContent({ products }: Props) {
+  const { user, logout, loading } = useAuth();
+  const [selectedPlan, setSelectedPlan] = useState(false);
 
-  if (user) {
-    return <p>Welcome, {user.email}!</p>;
-  }
-  
+  console.log("products at PlanContent", products);
+
   return (
     <div className="row">
       <div className="container">
@@ -54,11 +57,18 @@ function PlanContent() {
             <div className="plan__card--dot"></div>
           </div>
           <div className="plan__card--content">
-            <div className="plan__card--title">Premium Plus Yearly</div>
-            <div className="plan__card--price">$99.99/year</div>
-            <div className="plan__card--description">
-              7-day free trial included
-            </div>
+            {products &&
+              products.map((product) => (
+                <div key={product?.id} className="plan__card--content">
+                  <div className="plan__card--title">{product?.name}</div>
+                  <div className="plan__card--price">
+                    ${product.prices[0].unit_amount! / 100}
+                  </div>
+                  <div className="plan__card--description">
+                    {product?.description}
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -97,3 +107,25 @@ function PlanContent() {
   );
 }
 export default PlanContent;
+
+export const getServerSideProps = async () => {
+  try {
+    const products = await getProducts(payments, {
+      includePrices: true,
+      activeOnly: true,
+    });
+
+    return {
+      props: {
+        products,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        products: [],
+      },
+    };
+  }
+};

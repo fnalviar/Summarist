@@ -26,15 +26,19 @@ export const getServerSideProps = async () => {
       activeOnly: true,
     });
 
+    console.log("Fetched products:", products); // Add this line to inspect the products
+
     return {
       props: {
         products,
       },
     };
   } catch (error) {
+    console.error("Error fetching products:", error);
+
     return {
       props: {
-        products: [],
+        products: null,
       },
     };
   }

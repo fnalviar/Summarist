@@ -108,24 +108,3 @@ function PlanContent({ products }: Props) {
 }
 export default PlanContent;
 
-export const getServerSideProps = async () => {
-  try {
-    const products = await getProducts(payments, {
-      includePrices: true,
-      activeOnly: true,
-    });
-
-    return {
-      props: {
-        products,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        products: [],
-      },
-    };
-  }
-};

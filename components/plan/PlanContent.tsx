@@ -1,21 +1,34 @@
 import useAuth from "@/hooks/useAuth";
-import useSubscription from "@/hooks/useSubscription";
-import payments from "@/lib/stripe";
-import { Product, getProducts } from "@stripe/firestore-stripe-payments";
+import { createCheckoutSession } from "@/stripe/createCheckoutSession";
 import { useState } from "react";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";
 
-interface Props {
-  products: Product[];
-}
+function PlanContent() {
+  const { user, loading } = useAuth();
+  const [activePlan, setActivePlan] = useState<string>("yearly");
+  const [selectedPlan, setSelectedPlan] = useState<string>("");
 
-function PlanContent({ products }: Props) {
-  const { user, logout, loading } = useAuth();
-  const [selectedPlan, setSelectedPlan] = useState(false);
+  const handleActivePlan = (planName: string) => {
+    setActivePlan(planName);
 
-  console.log("products at PlanContent", products);
+    if (planName === "yearly") {
+      setSelectedPlan("yearly");
+    } else if (planName === "monthly") {
+      setSelectedPlan("monthly");
+    }
+  };
+
+  const subscribeToPlan = () => {
+    if (!user) return;
+
+    if (selectedPlan === "yearly") {
+      createCheckoutSession(user.uid, "price_1Nm2ujFFiX3mGzMGMtZmu8Eu");
+    } else if (selectedPlan === "monthly") {
+      createCheckoutSession(user.uid, "price_1Nm2vUFFiX3mGzMGo53a8kyl");
+    }
+  };
 
   return (
     <div className="row">
@@ -52,23 +65,23 @@ function PlanContent({ products }: Props) {
 
         <div className="section__title">Choose the plan that fits you</div>
 
-        <div className="plan__card plan__card--active">
+        <div
+          className={`plan__card ${
+            activePlan === "yearly" ? "plan__card--active" : ""
+          }`}
+          onClick={() => handleActivePlan("yearly")}
+        >
           <div className="plan__card--circle">
-            <div className="plan__card--dot"></div>
+            <div
+              className={`${activePlan === "yearly" ? "plan__card--dot" : ""}`}
+            ></div>
           </div>
           <div className="plan__card--content">
-            {products &&
-              products.map((product) => (
-                <div key={product?.id} className="plan__card--content">
-                  <div className="plan__card--title">{product?.name}</div>
-                  <div className="plan__card--price">
-                    ${product.prices[0].unit_amount! / 100}
-                  </div>
-                  <div className="plan__card--description">
-                    {product?.description}
-                  </div>
-                </div>
-              ))}
+            <div className="plan__card--title">Premium Plus Year</div>
+            <div className="plan__card--price">$99.99/year</div>
+            <div className="plan__card--description">
+              7-day free trial included
+            </div>
           </div>
         </div>
 
@@ -76,9 +89,16 @@ function PlanContent({ products }: Props) {
           <span className="auth__separator--text">or</span>
         </div>
 
-        <div className="plan__card">
+        <div
+          className={`plan__card ${
+            activePlan === "monthly" ? "plan__card--active" : ""
+          }`}
+          onClick={() => handleActivePlan("monthly")}
+        >
           <div className="plan__card--circle">
-            <div className="plan__card--dot"></div>
+            <div
+              className={`${activePlan === "monthly" ? "plan__card--dot" : ""}`}
+            ></div>
           </div>
           <div className="plan__card--content">
             <div className="plan__card--title">Premium Monthly</div>
@@ -88,23 +108,33 @@ function PlanContent({ products }: Props) {
         </div>
 
         <div className="plan__card--trial">
-          <span className="plan__btn--container">
-            <button className="btn plan__btn">
-              <span>Start your free 7-day trial</span>
-              <span>Start your first month</span>
-            </button>
-          </span>
-          <div className="plan__disclaimer">
-            Cancel your trial at any time before it ends, and you won’t be
-            charged.
-          </div>
-          <div className="plan__disclaimer">
-            30-day money back guarantee, no questions asked.
-          </div>
+          {activePlan === "yearly" ? (
+            <>
+              <span className="plan__btn--container">
+                <button className="btn plan__btn" onClick={subscribeToPlan}>
+                  <span>Start your free 7-day trial</span>
+                </button>
+              </span>
+              <div className="plan__disclaimer">
+                Cancel your trial at any time before it ends, and you won’t be
+                charged.
+              </div>
+            </>
+          ) : (
+            <>
+              <span className="plan__btn--container">
+                <button className="btn plan__btn" onClick={subscribeToPlan}>
+                  <span>Start your first month</span>
+                </button>
+              </span>
+              <div className="plan__disclaimer">
+                30-day money back guarantee, no questions asked.
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
 }
 export default PlanContent;
-

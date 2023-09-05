@@ -1393,6 +1393,14 @@ button:disabled {
   margin-bottom: 16px;
 }
 
+.btn.settings__upgrade--btn {
+  width: fit-content;
+}
+
+.settings__upgrade--btn {
+
+}
+
 /* 
   CHOOSE PLAN
 */

@@ -14,8 +14,9 @@ interface Inputs {
 }
 
 function Authentication() {
-  const [login, setLogin] = useState(true);
-  const [forgotPassword, setForgotPassword] = useState(false);
+  const [loginModal, setLoginModal] = useState(true);
+  const [signUpModal, setSignUpModal] = useState(false);
+  const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
 
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
@@ -29,9 +30,10 @@ function Authentication() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    if (login) {
+    if (loginModal) {
       await signIn(email, password);
-    } else {
+    }
+    if (signUpModal) {
       await signUp(email, password);
     }
   };
@@ -39,12 +41,16 @@ function Authentication() {
   return (
     <div className="auth__wrapper">
       <div className="auth">
-        {forgotPassword ? (
+        {forgotPasswordModal ? (
           <>
             <div className="auth__content">
               <div className="auth__header">Reset your password</div>
 
-              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+              <form
+                action=""
+                className="auth__form"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <input
                   type="text"
                   className="auth__input"
@@ -60,14 +66,14 @@ function Authentication() {
             <button
               className="no__account--btn"
               onClick={() => {
-                setForgotPassword(false);
-                setLogin(true);
+                setForgotPasswordModal(false);
+                setLoginModal(true);
               }}
             >
               Go to login
             </button>
           </>
-        ) : login ? (
+        ) : loginModal ? (
           <>
             <div className="auth__content">
               <div className="auth__header">Log in to Summarist</div>
@@ -91,7 +97,12 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+              {/* Registration */}
+              <form
+                action=""
+                className="auth__form"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <input
                   type="text"
                   className="auth__input"
@@ -118,15 +129,18 @@ function Authentication() {
             </div>
             <div
               className="auth__forgot--password"
-              onClick={() => setForgotPassword(true)}
+              onClick={() => setForgotPasswordModal(true)}
             >
               Forgot your password?
             </div>
             <button
               className="no__account--btn"
-              onClick={() => setLogin(false)}
+              onClick={() => {
+                setSignUpModal(true);
+                setLoginModal(false);
+              }}
             >
-             {" Don't have an account?"}
+              {" Don't have an account?"}
             </button>
           </>
         ) : (
@@ -144,7 +158,11 @@ function Authentication() {
                 <span className="auth__separator--text">or</span>
               </div>
 
-              <form action="" className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+              <form
+                action=""
+                className="auth__form"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <input
                   type="text"
                   className="auth__input"
@@ -164,13 +182,22 @@ function Authentication() {
                   </p>
                 )}
 
-                <button className="btn">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    setLoginModal(false);
+                    setSignUpModal(true);
+                  }}
+                >
                   <span>Sign Up</span>
                 </button>
               </form>
             </div>
 
-            <button className="no__account--btn" onClick={() => setLogin(true)}>
+            <button
+              className="no__account--btn"
+              onClick={() => setLoginModal(true)}
+            >
               Already have an account?
             </button>
           </>

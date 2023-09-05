@@ -6,8 +6,6 @@ import { getFunctions, httpsCallable } from "@firebase/functions";
 import app from "../firebase";
 import { Stripe } from "@stripe/stripe-js";
 
-let stripePromise: Stripe | null;
-
 const payments = getStripePayments(app, {
   productsCollection: "products",
   customersCollection: "customers",
@@ -30,10 +28,11 @@ const goToBillingPortal = async () => {
     "ext-firestore-stripe-payments-createPortalLink"
   );
 
-  await functionRef( {
-    returnUrl: `${window.location.origin}/choose-plan`
-  }).then(({data}: any) => window.location.assign(data.url))
-  .catch((error) => console.log(error.message))
+  await functionRef({
+    returnUrl: `${window.location.origin}/choose-plan`,
+  })
+    .then(({ data }: any) => window.location.assign(data.url))
+    .catch((error) => console.log(error.message));
 };
 
 export { loadCheckout, goToBillingPortal };

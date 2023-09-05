@@ -51,10 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setUser(null);
           setLoading(true);
           // router.push("/"); // NEED TO REVISE
-          // <Authentication />
         }
-
-        // setInitialLoading(false);
       }),
     [auth]
   );

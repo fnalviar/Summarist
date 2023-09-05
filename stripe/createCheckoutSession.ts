@@ -1,8 +1,22 @@
-import { addDoc, collection, onSnapshot, DocumentData } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  DocumentData,
+} from "firebase/firestore";
 import getStripe from "./initializeStripe";
-import { db } from "@/firebase";
+import app, { db } from "@/firebase";
+import { getStripePayments } from "@stripe/firestore-stripe-payments";
 
-export const createCheckoutSession = async (customerId: string, priceId: string) => {
+const payments = getStripePayments(app, {
+  productsCollection: "products",
+  customersCollection: "customers",
+});
+
+export const createCheckoutSession = async (
+  customerId: string,
+  priceId: string
+) => {
   const checkoutSessionRef = await addDoc(
     collection(db, "customers", customerId, "checkout_sessions"),
     {
@@ -13,7 +27,7 @@ export const createCheckoutSession = async (customerId: string, priceId: string)
   );
   onSnapshot(checkoutSessionRef, async (snapshot) => {
     const data = snapshot.data() as DocumentData;
-    const sessionId = data?.sessionId; 
+    const sessionId = data?.sessionId;
     if (sessionId) {
       const stripe = await getStripe();
       if (stripe) {
@@ -26,3 +40,5 @@ export const createCheckoutSession = async (customerId: string, priceId: string)
     }
   });
 };
+
+export default payments;

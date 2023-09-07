@@ -1,4 +1,5 @@
 import useAuth from "@/hooks/useAuth";
+import useSubscription from "@/hooks/useSubscription";
 import { modalClose } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
 import { useState } from "react";
@@ -15,13 +16,11 @@ interface Inputs {
 
 function Authentication() {
   const [loginModal, setLoginModal] = useState(true);
-  const [signUpModal, setSignUpModal] = useState(false);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
+  const { signIn, signUp } = useAuth();
 
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
-
-  const { signIn, signUp } = useAuth();
 
   const {
     register,
@@ -32,8 +31,7 @@ function Authentication() {
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (loginModal) {
       await signIn(email, password);
-    }
-    if (signUpModal) {
+    } else {
       await signUp(email, password);
     }
   };
@@ -136,7 +134,6 @@ function Authentication() {
             <button
               className="no__account--btn"
               onClick={() => {
-                setSignUpModal(true);
                 setLoginModal(false);
               }}
             >
@@ -186,7 +183,6 @@ function Authentication() {
                   className="btn"
                   onClick={() => {
                     setLoginModal(false);
-                    setSignUpModal(true);
                   }}
                 >
                   <span>Sign Up</span>
@@ -216,10 +212,3 @@ function Authentication() {
   );
 }
 export default Authentication;
-
-function signIn(
-  email: Inputs,
-  password: import("react").BaseSyntheticEvent<object, any, any> | undefined
-) {
-  throw new Error("Function not implemented.");
-}

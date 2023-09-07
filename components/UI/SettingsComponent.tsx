@@ -1,15 +1,36 @@
+import { initFirebase } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
 import { modalOpen } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
+import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function SettingsComponent() {
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
-  const { user } = useAuth();
-  // const subscription = useSubscription(user);
 
-  console.log("user at SettingsComponent", user);
+  const app = initFirebase();
+  const auth = getAuth(app);
+
+  const { user } = useAuth();
+
+  const [isPremium, setIsPremium] = useState(false);
+  const [premiumStatusName, setPremiumStatusName] = useState("");
+
+  useEffect(() => {
+    const checkPremium = async () => {
+      const subscriptionData = auth.currentUser
+        ? await useSubscription(app)
+        : { isActive: false, subscriptionName: null };
+
+      setIsPremium(subscriptionData.isActive);
+      setPremiumStatusName(subscriptionData.subscriptionName || "");
+    };
+
+    checkPremium();
+  }, [app, auth.currentUser?.uid]);
 
   return (
     <div className="container">
@@ -20,11 +41,20 @@ function SettingsComponent() {
             <div className="setting__info">
               <div className="setting__info--title">Your Subscription Plan</div>
               <div className="setting__info--subtitle">
-                Basic (need to make it dynamic){" "}
+                {isPremium ? (
+                  premiumStatusName
+                ) : (
+                  <>
+                    Basic
+                    <a
+                      href="/choose-plan"
+                      className="btn settings__upgrade--btn"
+                    >
+                      Upgrade to Premium
+                    </a>
+                  </>
+                )}
               </div>
-              <a href="/choose-plan" className="btn settings__upgrade--btn">
-                Upgrade to Premium
-              </a>
             </div>
             <div className="setting__info">
               <div className="setting__info--title">Email</div>

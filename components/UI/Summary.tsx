@@ -1,5 +1,5 @@
 import { Book } from "@/types";
-import AudioCard from "./AudioCard";
+import AudioPlayer from "../audio/AudioPlayer";
 
 interface Props {
   bookSummary: Book | null;
@@ -16,7 +16,7 @@ function Summary({ bookSummary }: Props) {
         <div className="audio--summary--text">{bookSummary?.summary}</div>
       </div>
 
-      <AudioCard book={bookSummary} />
+      <AudioPlayer book={bookSummary} />
     </div>
   );
 }

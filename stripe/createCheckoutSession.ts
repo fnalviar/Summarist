@@ -6,7 +6,7 @@ import {
 } from "firebase/firestore";
 import getStripe from "./initializeStripe";
 import app, { db } from "@/firebase";
-import { getStripePayments } from "@stripe/firestore-stripe-payments";
+import { getStripePayments } from "@invertase/firestore-stripe-payments";
 
 const payments = getStripePayments(app, {
   productsCollection: "products",
@@ -21,8 +21,8 @@ export const createCheckoutSession = async (
     collection(db, "customers", customerId, "checkout_sessions"),
     {
       price: priceId,
-      success_url: window.location.origin,
-      cancel_url: window.location.origin,
+      success_url: `${window.location.origin}/for-you`,
+      cancel_url: window.location.href,
     }
   );
   onSnapshot(checkoutSessionRef, async (snapshot) => {

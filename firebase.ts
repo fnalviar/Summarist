@@ -19,3 +19,7 @@ const auth = getAuth(app);
 
 export default app; 
 export { auth, db };
+
+export const initFirebase = () => {
+  return app;
+};

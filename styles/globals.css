@@ -1299,9 +1299,8 @@ button:disabled {
 }
 
 .audio__controls--btn svg {
-  width: 28px;
-  height: 28px;
-  stroke: #fff;
+  width: 32px;
+  height: 32px;
   transition: all 0.2s;
   color: #fff;
 }

@@ -31,6 +31,8 @@ function useAudioDuration(book: Book | null) {
       getAudioDuration(book.audioLink);
     }
   }, [book]);
+
   return { audioDurationMinutes, audioDurationSeconds };
 }
+
 export default useAudioDuration;

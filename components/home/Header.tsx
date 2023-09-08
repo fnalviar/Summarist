@@ -1,12 +1,9 @@
-import Image from "next/image";
-import Logo from "../../assets/logo.png";
-import { RootState } from "@/redux/modalStore";
-import { useDispatch, useSelector } from "react-redux";
 import { modalOpen } from "@/redux/modalSlice";
-
+import Image from "next/image";
+import { useDispatch } from "react-redux";
+import Logo from "../../assets/logo.png";
 
 function Header() {
-  const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
 
   return (

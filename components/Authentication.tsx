@@ -1,5 +1,4 @@
 import useAuth from "@/hooks/useAuth";
-import useSubscription from "@/hooks/useSubscription";
 import { modalClose } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
 import { useState } from "react";
@@ -31,8 +30,10 @@ function Authentication() {
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (loginModal) {
       await signIn(email, password);
+      dispatch(modalClose());
     } else {
       await signUp(email, password);
+      dispatch(modalClose());
     }
   };
 

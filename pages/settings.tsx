@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 function Settings() {
   const modal = useSelector((state: RootState) => state.modal.value);
+
   return (
     <div id="settings">
       <div className="content--wrapper">

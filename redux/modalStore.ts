@@ -3,9 +3,9 @@ import modalSlice from "./modalSlice";
 
 export const modalStore = configureStore({
   reducer: {
-    modal: modalSlice
+    modal: modalSlice,
   },
 });
 
-export type RootState = ReturnType<typeof modalStore.getState>
-export type AppDispatch = typeof modalStore.dispatch
+export type RootState = ReturnType<typeof modalStore.getState>;
+export type AppDispatch = typeof modalStore.dispatch;

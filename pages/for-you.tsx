@@ -1,12 +1,17 @@
+import Authentication from "@/components/Authentication";
 import SearchBar from "@/components/library/SearchBar";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
+import { RootState } from "@/redux/modalStore";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ForYou = () => {
+  const modal = useSelector((state: RootState) => state.modal.value);
+
   const [loading, setLoading] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [recommendedBooks, setRecommendedBooks] = useState<Book[]>([]);
@@ -41,8 +46,9 @@ const ForYou = () => {
   return (
     <div id="foryou">
       <div className="content--wrapper">
-        <SearchBar />
+        {modal && <Authentication />}
 
+        <SearchBar />
         <Sidebar />
         <SelectedBooks
           selectedBook={selectedBook}

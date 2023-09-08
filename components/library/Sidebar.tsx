@@ -1,8 +1,8 @@
 import { modalOpen } from "@/redux/modalSlice";
 import {
-    AiOutlineHome,
-    AiOutlineSearch,
-    AiOutlineSetting
+  AiOutlineHome,
+  AiOutlineSearch,
+  AiOutlineSetting,
 } from "react-icons/ai";
 import { BiHelpCircle, BiLogIn } from "react-icons/bi";
 import { BsBookmark } from "react-icons/bs";
@@ -79,16 +79,15 @@ function Sidebar() {
           </a>
 
           {user ? (
-            <a href="" className="sidebar__link--wrapper" onClick={logout}>
+            <div className="sidebar__link--wrapper" onClick={logout}>
               <div className="sidebar__link--line active--tab"></div>
               <div className="sidebar__icon--wrapper">
                 <BiLogIn className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">Logout</div>
-            </a>
+            </div>
           ) : (
-            <a
-              href=""
+            <div
               className="sidebar__link--wrapper"
               onClick={() => dispatch(modalOpen())}
             >
@@ -97,7 +96,7 @@ function Sidebar() {
                 <BiLogIn className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">Login</div>
-            </a>
+            </div>
           )}
         </div>
       </div>

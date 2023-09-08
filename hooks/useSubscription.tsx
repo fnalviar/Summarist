@@ -1,29 +1,52 @@
-import payments from "@/lib/stripe";
+import { FirebaseApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import {
-  Subscription,
-  onCurrentUserSubscriptionUpdate,
-} from "@stripe/firestore-stripe-payments";
-import { User } from "firebase/auth";
-import { useEffect, useState } from "react";
+  collection,
+  getFirestore,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 
-function useSubscription(user: User | null) {
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
+export const useSubscription = async (app: FirebaseApp) => {
+  const auth = getAuth(app);
+  const userId = auth.currentUser?.uid;
+  
+  if (!userId) throw new Error("User not logged in");
 
-  useEffect(() => {
-    if (!user) return;
+  const db = getFirestore(app);
+  const subscriptionsRef = collection(db, "customers", userId, "subscriptions");
 
-    onCurrentUserSubscriptionUpdate(payments, (snapshot) => {
-      setSubscription(
-        snapshot.subscriptions.filter(
-          (subscription) =>
-            subscription.status === "active" ||
-            subscription.status === "trialing"
-        )[0]
+  const activeStatusQuery = query(
+    subscriptionsRef,
+    where("status", "in", ["trialing", "active"])
+  );
+
+  return new Promise<{ isActive: boolean; subscriptionName: string | null }>(
+    (resolve, reject) => {
+      const unsubscribe = onSnapshot(
+        activeStatusQuery,
+        (snapshot) => {
+          // In this implementation, we only expect one active or trialing subscription to exist.
+          if (snapshot.docs.length === 0) {
+            console.log("No active or trialing subscriptions found");
+            resolve({ isActive: false, subscriptionName: null });
+          } else {
+            // Assuming there's only one active/ trial subscription, you can get its name here
+            const subscriptionData = snapshot.docs[0].data();
+            const subscriptionName =
+              subscriptionData.items[0].price.product.name || null;
+
+            console.log("subscriptionData", subscriptionData);
+            console.log("subscriptionName", subscriptionName);
+
+            console.log("Active or trialing subscription found");
+            resolve({ isActive: true, subscriptionName });
+          }
+          unsubscribe();
+        },
+        reject
       );
-    }); 
-  }, [user]);
-
-  return subscription;
-}
-
-export default useSubscription;
+    }
+  );
+};

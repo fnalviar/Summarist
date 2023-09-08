@@ -1,5 +1,5 @@
-import BookCard from "@/components/UI/BookCard";
-import SearchBackground from "@/components/library/SearchBackground";
+import SummaryBook from "@/components/UI/SummaryBook";
+import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
@@ -49,9 +49,9 @@ function BookDetail() {
   return (
     <div id="foryou">
       <div className="content--wrapper">
-        <SearchBackground />
+        <SearchBar />
         <Sidebar />
-        <BookCard bookSummary={bookSummary} />
+        <SummaryBook bookSummary={bookSummary} />
       </div>
     </div>
   );

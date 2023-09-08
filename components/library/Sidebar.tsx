@@ -24,7 +24,7 @@ function Sidebar() {
       </div>
       <div className="sidebar__wrapper">
         <div className="sidebar__top">
-          <a href="/ForYou" className="sidebar__link--wrapper">
+          <a href="/for-you" className="sidebar__link--wrapper">
             <div className="sidebar__link--line active--tab"></div>
             <div className="sidebar__icon--wrapper">
               <AiOutlineHome className="sidebar__icons" />

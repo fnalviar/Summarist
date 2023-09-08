@@ -9,7 +9,6 @@ import {
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-
 interface IAuth {
   user: User | null;
   signUp: (email: string, password: string) => Promise<void>;
@@ -36,25 +35,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
-  //   const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const router = useRouter();
 
-  // Persisting the user
+  /// Persisting the user
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // user logged in
+          // Logged in...
           setUser(user);
           setLoading(false);
         } else {
-          // user not logged in
+          // Not logged in...
           setUser(null);
           setLoading(true);
-          // router.push("/"); // NEED TO REVISE
+          // router.push("/login");
         }
 
-        // setInitialLoading(false);
+        setInitialLoading(false);
       }),
     [auth]
   );
@@ -71,6 +70,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .catch((error) => alert(error.message))
       .finally(() => setLoading(false));
   };
+
+
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
@@ -109,7 +110,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   return (
-    <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={memoedValue}>
+      {!initialLoading && children}
+    </AuthContext.Provider>
   );
 };
 

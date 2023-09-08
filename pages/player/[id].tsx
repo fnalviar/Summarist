@@ -1,5 +1,5 @@
 import Summary from "@/components/UI/Summary";
-import SearchBackground from "@/components/library/SearchBackground";
+import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
@@ -28,7 +28,7 @@ function BookAudio({ bookSummary }: Props) {
   return (
     <div id="foryou">
       <div className="content--wrapper">
-        <SearchBackground />
+        <SearchBar />
         <Sidebar />
         <Summary bookSummary={bookSummary} />
       </div>

@@ -16,7 +16,7 @@ interface Inputs {
 function Authentication() {
   const [loginModal, setLoginModal] = useState(true);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, guestSignIn } = useAuth();
 
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
@@ -35,6 +35,12 @@ function Authentication() {
       await signUp(email, password);
       dispatch(modalClose());
     }
+  };
+
+  const guestSignInHandler = async () => {
+    await guestSignIn();
+    dispatch(modalClose());
+    console.log("guest login in onSubmit function");
   };
 
   return (
@@ -76,7 +82,12 @@ function Authentication() {
           <>
             <div className="auth__content">
               <div className="auth__header">Log in to Summarist</div>
-              <button className="btn guest__btn--wrapper">
+              <button
+                className="btn guest__btn--wrapper"
+                onClick={() => {
+                  guestSignInHandler();
+                }}
+              >
                 <div className="guest__icon--wrapper facebook__icon--wrapper">
                   <BsFillPersonFill className="guest__icon" />
                 </div>

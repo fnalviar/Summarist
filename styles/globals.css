@@ -82,6 +82,21 @@ button:disabled {
   justify-content: center;
 }
 
+.loading__icon {
+  animation: spinner 750ms infinite linear;
+  background-color: #fff;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* HOME */
 .section__title {
   font-size: 32px;
@@ -1496,7 +1511,7 @@ button:disabled {
   ACCORDION
 */
 
-.accordion__card{
+.accordion__card {
   border: 0px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 8px;
@@ -1554,7 +1569,7 @@ button:disabled {
   padding-bottom: 24px;
   color: #394547;
   line-height: 1.5;
-  transition: min-height 0.55s ease
+  transition: min-height 0.55s ease;
 }
 
 /* 

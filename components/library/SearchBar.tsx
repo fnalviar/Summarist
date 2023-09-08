@@ -18,7 +18,6 @@ function SearchBar() {
       const searchBookResponse = (
         await axios.get(requests.fetchSearchBook(search as string))
       ).data;
-      console.log(searchBookResponse);
       setBooks(searchBookResponse);
     } catch (error) {
       console.log(error);

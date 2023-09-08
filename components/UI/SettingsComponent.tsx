@@ -58,7 +58,11 @@ function SettingsComponent() {
             </div>
             <div className="setting__info">
               <div className="setting__info--title">Email</div>
-              <div className="setting__info--subtitle">{user?.email}</div>
+              {user?.email ? (
+                <div className="setting__info--subtitle">{user?.email}</div>
+              ) : (
+                <div className="setting__info--subtitle">Guest</div>
+              )}
             </div>
           </>
         ) : (

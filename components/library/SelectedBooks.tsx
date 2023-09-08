@@ -3,6 +3,7 @@ import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
+import SelectedBooksSkeleton from "../UI/Skeleton/SelectedBooksSkeleton";
 
 interface Props {
   selectedBook: Book | null;
@@ -15,10 +16,8 @@ function SelectedBooks({
   recommendedBooks,
   suggestedBooks,
 }: Props) {
-  const { loading } = useAuth();
-  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(selectedBook);
-
-  if (loading === null) return null;
+  const { audioDurationMinutes, audioDurationSeconds } =
+    useAudioDuration(selectedBook);
 
   return (
     <div className="row">
@@ -54,7 +53,11 @@ function SelectedBooks({
                     {audioDurationMinutes.toLocaleString("en-US", {
                       minimumIntegerDigits: 2,
                     })}{" "}
-                    mins {audioDurationSeconds.toLocaleString("en-US", { minimumIntegerDigits: 2 })} secs
+                    mins{" "}
+                    {audioDurationSeconds.toLocaleString("en-US", {
+                      minimumIntegerDigits: 2,
+                    })}{" "}
+                    secs
                   </div>
                 </div>
               </div>

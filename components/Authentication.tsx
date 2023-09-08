@@ -3,7 +3,7 @@ import { modalClose } from "@/redux/modalSlice";
 import { RootState } from "@/redux/modalStore";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ interface Inputs {
 function Authentication() {
   const [loginModal, setLoginModal] = useState(true);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, guestSignIn, loading } = useAuth();
 
   const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
@@ -30,11 +30,25 @@ function Authentication() {
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (loginModal) {
       await signIn(email, password);
-      dispatch(modalClose());
+
+      setTimeout(() => {
+        dispatch(modalClose());
+      }, 500);
     } else {
       await signUp(email, password);
-      dispatch(modalClose());
+
+      setTimeout(() => {
+        dispatch(modalClose());
+      }, 500);
     }
+  };
+
+  const guestSignInHandler = async () => {
+    await guestSignIn();
+
+    setTimeout(() => {
+      dispatch(modalClose());
+    }, 500);
   };
 
   return (
@@ -76,7 +90,12 @@ function Authentication() {
           <>
             <div className="auth__content">
               <div className="auth__header">Log in to Summarist</div>
-              <button className="btn guest__btn--wrapper">
+              <button
+                className="btn guest__btn--wrapper"
+                onClick={() => {
+                  guestSignInHandler();
+                }}
+              >
                 <div className="guest__icon--wrapper facebook__icon--wrapper">
                   <BsFillPersonFill className="guest__icon" />
                 </div>
@@ -122,7 +141,13 @@ function Authentication() {
                 )}
 
                 <button className="btn">
-                  <span>Login</span>
+                  {loading ? (
+                    <span>
+                      <AiOutlineLoading3Quarters className="loading__icon" />
+                    </span>
+                  ) : (
+                    <span>Login</span>
+                  )}
                 </button>
               </form>
             </div>

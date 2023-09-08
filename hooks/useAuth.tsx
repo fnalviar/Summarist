@@ -3,6 +3,7 @@ import {
   User,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -14,6 +15,7 @@ interface IAuth {
   signUp: (email: string, password: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  guestSignIn: () => Promise<void>;
   error: string | null;
   loading: boolean;
 }
@@ -23,6 +25,7 @@ const AuthContext = createContext<IAuth>({
   signUp: async () => {},
   signIn: async () => {},
   logout: async () => {},
+  guestSignIn: async () => {},
   error: null,
   loading: false,
 });
@@ -71,8 +74,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .finally(() => setLoading(false));
   };
 
-
-
   const signIn = async (email: string, password: string) => {
     setLoading(true);
 
@@ -80,6 +81,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .then((userCredential) => {
         setUser(userCredential.user);
         router.push("/for-you"); // routes the users to the home page after login
+        setLoading(false);
+      })
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
+  };
+
+  const guestSignIn = async () => {
+    setLoading(true);
+
+    await signInAnonymously(auth)
+      .then((userCredential) => {
+        setUser(userCredential.user);
+        router.push("/for-you");
         setLoading(false);
       })
       .catch((error) => alert(error.message))
@@ -103,6 +117,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       signUp,
       signIn,
       logout,
+      guestSignIn,
       loading,
       error,
     }),

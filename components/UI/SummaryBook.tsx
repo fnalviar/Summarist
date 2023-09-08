@@ -11,7 +11,8 @@ interface Props {
 }
 
 function SummaryBook({ bookSummary }: Props) {
-  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(bookSummary);
+  const { audioDurationMinutes, audioDurationSeconds } =
+    useAudioDuration(bookSummary);
 
   return (
     <div className="row">
@@ -105,11 +106,12 @@ function SummaryBook({ bookSummary }: Props) {
             <h2 className="book--about__container">{"What's"} it about?</h2>
 
             <div className="book--tags__container">
-              {bookSummary?.tags.map((tag, index) => (
-                <div className="book--tag" key={index}>
-                  {tag}
-                </div>
-              ))}
+              {bookSummary &&
+                bookSummary.tags.map((tag, index) => (
+                  <div className="book--tag" key={index}>
+                    {tag}
+                  </div>
+                ))}
             </div>
 
             <div className="book__description">

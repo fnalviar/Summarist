@@ -1,4 +1,5 @@
 import SummaryBook from "@/components/UI/SummaryBook";
+import SummaryBookSkeleton from "@/components/UI/Skeleton/SummaryBookSkeleton";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
@@ -13,8 +14,6 @@ function BookDetail() {
   const [bookSummary, setBookSummary] = useState<Book | null>(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(id);
-
   async function fetchBook() {
     setLoading(true);
     try {
@@ -22,11 +21,6 @@ function BookDetail() {
         await axios.get(requests.fetchBook(id as string))
       ).data;
       setBookSummary(getBookResponse);
-
-      console.log("response", getBookResponse);
-
-      const { audioLink } = getBookResponse.audioLink;
-      console.log(audioLink);
     } catch (error) {
       console.log(error);
     } finally {
@@ -38,20 +32,16 @@ function BookDetail() {
     fetchBook();
   }, [id]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!bookSummary) {
-    return <div>Book not found!</div>;
-  }
-
   return (
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBar />
         <Sidebar />
-        <SummaryBook bookSummary={bookSummary} />
+        {loading ? (
+          <SummaryBookSkeleton />
+        ) : (
+          <SummaryBook bookSummary={bookSummary} />
+        )}
       </div>
     </div>
   );

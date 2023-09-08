@@ -1,10 +1,11 @@
+import SummarySkeleton from "@/components/UI/Skeleton/SummarySkeleton";
 import Summary from "@/components/UI/Summary";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";
-import { GetServerSidePropsContext, GetStaticPropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -17,20 +18,13 @@ function BookAudio({ bookSummary }: Props) {
   const { id } = router.query;
   const [loading, setLoading] = useState(false);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!bookSummary) {
-    return <div>Book not found!</div>;
-  }
-
   return (
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBar />
         <Sidebar />
-        <Summary bookSummary={bookSummary} />
+
+        {loading ? <SummarySkeleton /> : <Summary bookSummary={bookSummary} />}
       </div>
     </div>
   );

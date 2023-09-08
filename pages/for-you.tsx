@@ -1,4 +1,5 @@
 import Authentication from "@/components/Authentication";
+import SelectedBooksSkeleton from "@/components/UI/Skeleton/SelectedBooksSkeleton";
 import SearchBar from "@/components/library/SearchBar";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
@@ -50,11 +51,16 @@ const ForYou = () => {
 
         <SearchBar />
         <Sidebar />
-        <SelectedBooks
-          selectedBook={selectedBook}
-          recommendedBooks={recommendedBooks}
-          suggestedBooks={recommendedBooks}
-        />
+
+        {loading ? (
+          <SelectedBooksSkeleton />
+        ) : (
+          <SelectedBooks
+            selectedBook={selectedBook}
+            recommendedBooks={recommendedBooks}
+            suggestedBooks={recommendedBooks}
+          />
+        )}
       </div>
     </div>
   );

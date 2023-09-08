@@ -1,4 +1,4 @@
-import SearchBackground from "@/components/library/SearchBackground";
+import SearchBar from "@/components/library/SearchBar";
 import SelectedBooks from "@/components/library/SelectedBooks";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
@@ -41,7 +41,7 @@ const ForYou = () => {
   return (
     <div id="foryou">
       <div className="content--wrapper">
-        <SearchBackground />
+        <SearchBar />
 
         <Sidebar />
         <SelectedBooks

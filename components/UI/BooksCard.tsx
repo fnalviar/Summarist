@@ -12,10 +12,11 @@ function BooksCard({ books }: Props) {
   return (
     <div className="recommended--books__container">
       {books.map((book) => {
-        const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(book);
+        const { audioDurationMinutes, audioDurationSeconds } =
+          useAudioDuration(book);
 
         return (
-          <Link href={`/book/${book.id}`} key={book.id}>
+          <a href={`/book/${book.id}`} key={book.id} >
             <div className="recommended--books--link">
               {book.subscriptionRequired && (
                 <div className="book--premium">Premium</div>
@@ -33,7 +34,8 @@ function BooksCard({ books }: Props) {
                     <BiTimeFive className="recommended__book--details-icon" />
                   </div>
                   <div className="recommended__book--details-text">
-                    {audioDurationMinutes}:{audioDurationSeconds.toString().padStart(2, "0")}
+                    {audioDurationMinutes}:
+                    {audioDurationSeconds.toString().padStart(2, "0")}
                   </div>
                 </div>
                 <div className="recommended__book--details">
@@ -46,7 +48,7 @@ function BooksCard({ books }: Props) {
                 </div>
               </div>
             </div>
-          </Link>
+          </a>
         );
       })}
     </div>

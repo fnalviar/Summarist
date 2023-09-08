@@ -16,8 +16,7 @@ function SelectedBooks({
   suggestedBooks,
 }: Props) {
   const { loading } = useAuth();
-  const { audioDurationMinutes } = useAudioDuration(selectedBook);
-  const { audioDurationSeconds } = useAudioDuration(selectedBook);
+  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(selectedBook);
 
   if (loading === null) return null;
 

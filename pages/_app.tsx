@@ -2,6 +2,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { modalStore } from "@/redux/modalStore";
 import "@/styles/globals.css";
 import "@/styles/progress-bar.css";
+import "@/styles/search-bar.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 

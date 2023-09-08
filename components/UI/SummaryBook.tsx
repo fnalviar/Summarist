@@ -10,9 +10,8 @@ interface Props {
   bookSummary: Book | null;
 }
 
-function BookCard({ bookSummary }: Props) {
-  const { audioDurationMinutes } = useAudioDuration(bookSummary);
-  const { audioDurationSeconds } = useAudioDuration(bookSummary);
+function SummaryBook({ bookSummary }: Props) {
+  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(bookSummary);
 
   return (
     <div className="row">
@@ -138,4 +137,4 @@ function BookCard({ bookSummary }: Props) {
     </div>
   );
 }
-export default BookCard;
+export default SummaryBook;

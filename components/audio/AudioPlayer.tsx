@@ -33,7 +33,7 @@ function AudioPlayer({ book }: Props) {
       setTimeProgress(0);
       progressBarRef.current!.value = "0";
       progressBarRef.current!.style.setProperty("--range-progress", "0%");
-      setIsPlaying(false); // Pause the audio and change the play button to "play"
+      setIsPlaying(false);
     }
   };
 

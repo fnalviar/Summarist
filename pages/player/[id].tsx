@@ -1,5 +1,5 @@
-import SummarySkeleton from "@/components/UI/Skeleton/SummarySkeleton";
 import Summary from "@/components/UI/Summary";
+import AudioPlayer from "@/components/audio/AudioPlayer";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { Book } from "@/types";
@@ -8,6 +8,7 @@ import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface Props {
   bookSummary: Book | null;
@@ -16,15 +17,16 @@ interface Props {
 function BookAudio({ bookSummary }: Props) {
   const router = useRouter();
   const { id } = router.query;
-  const [loading, setLoading] = useState(false);
+
+  const [audioPlayerDisplay, setAudioPlayerDisplay] = useState(true);
 
   return (
     <div id="foryou">
       <div className="content--wrapper">
         <SearchBar />
         <Sidebar />
-
-        {loading ? <SummarySkeleton /> : <Summary bookSummary={bookSummary} />}
+        <Summary bookSummary={bookSummary} />
+        <AudioPlayer book={bookSummary} />
       </div>
     </div>
   );

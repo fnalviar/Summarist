@@ -12,17 +12,26 @@ import { useDispatch } from "react-redux";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import Logo from "../../assets/logo.png";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/modalStore";
 
 function Sidebar() {
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
+
+  const audioPlayer = useSelector((state: RootState) => state.audioPlayer.value);
+  console.log(audioPlayer);
 
   return (
     <div className="sidebar sidebar--closed">
       <div className="sidebar__logo">
         <Image className="sidebar__logo--img" src={Logo} alt="logo" />
       </div>
-      <div className="sidebar__wrapper">
+      <div
+        className={`sidebar__wrapper ${
+          audioPlayer ? "sidebar__wrapper--audio" : ""
+        }`}
+      >
         <div className="sidebar__top">
           <a href="/for-you" className="sidebar__link--wrapper">
             <div className="sidebar__link--line active--tab"></div>

@@ -29,7 +29,7 @@ function SearchBar() {
   useEffect(() => {
     const getData = setTimeout(() => {
       fetchSearchBook(userInput);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(getData);
   }, [userInput]);

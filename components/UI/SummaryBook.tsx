@@ -1,16 +1,19 @@
 import useAudioDuration from "@/hooks/useAudioDuration";
+import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
 import { Book } from "@/types";
 import Link from "next/link";
 import { AiOutlineStar, AiOutlineAudio, AiOutlineRead } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 import { BsBookmark } from "react-icons/bs";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import { useDispatch } from "react-redux";
 
 interface Props {
   bookSummary: Book | null;
 }
 
 function SummaryBook({ bookSummary }: Props) {
+  const dispatch = useDispatch();
   const { audioDurationMinutes, audioDurationSeconds } =
     useAudioDuration(bookSummary);
 
@@ -84,7 +87,12 @@ function SummaryBook({ bookSummary }: Props) {
                   <div className="book--read__text">Read</div>
                 </button>
               </Link>
-              <Link href={`/player/${bookSummary?.id}`}>
+              <Link
+                href={`/player/${bookSummary?.id}`}
+                onClick={() => {
+                  dispatch(audioPlayerOpen());
+                }}
+              >
                 <button className="book--read__btn">
                   <div className="book--read__icon">
                     <AiOutlineAudio />

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import modalSlice from "./modalSlice";
 import audioPlayerSlice from "./audioPlayerSlice";
+import modalSlice from "./modalSlice";
+import sideBarSlice from "./sideBarSlice";
 
 export const modalStore = configureStore({
   reducer: {
     modal: modalSlice,
     audioPlayer: audioPlayerSlice,
+    sideBar: sideBarSlice,
   },
 });
 

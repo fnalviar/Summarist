@@ -1,15 +1,21 @@
+import { sideBarClose, sideBarOpen } from "@/redux/sideBarSlice";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBookCard from "../UI/SearchBookCard";
+import { RootState } from "@/redux/modalStore";
 
 function SearchBar() {
   const [userInput, setUserInput] = useState("");
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
   const shouldRenderSearchBookCard = userInput.trim() !== "";
+
+  const sideBar = useSelector((state: RootState) => state.sideBar.value);
+  const dispatch = useDispatch();
 
   async function fetchSearchBook(search: string) {
     setLoading(true);
@@ -25,6 +31,14 @@ function SearchBar() {
       setLoading(false);
     }
   }
+
+  const sideBarHandler = () => {
+    if (sideBar === false) {
+      dispatch(sideBarOpen());
+    } else {
+      dispatch(sideBarClose());
+    }
+  };
 
   useEffect(() => {
     const getData = setTimeout(() => {
@@ -53,7 +67,10 @@ function SearchBar() {
               </div>
             </div>
           </div>
-          <div className="sidebar__toggle--btn">
+          <div
+            className="sidebar__toggle--btn"
+            onClick={() => sideBarHandler()}
+          >
             <AiOutlineMenu className="menu__icon--svg" />
           </div>
         </div>

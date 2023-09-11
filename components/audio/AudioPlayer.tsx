@@ -1,5 +1,7 @@
+import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
 import { Book } from "@/types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import Controls from "../audio/Controls";
 import DisplayTrack from "../audio/DisplayTrack";
 import ProgressBar from "../audio/ProgressBar";
@@ -9,6 +11,8 @@ interface Props {
 }
 
 function AudioPlayer({ book }: Props) {
+  const dispatch = useDispatch();
+
   const [timeProgress, setTimeProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -36,6 +40,10 @@ function AudioPlayer({ book }: Props) {
       setIsPlaying(false);
     }
   };
+
+  useEffect(() => {
+    dispatch(audioPlayerOpen());
+  }, []);
 
   return (
     <div className="audio__container">

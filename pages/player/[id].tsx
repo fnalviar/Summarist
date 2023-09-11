@@ -2,12 +2,17 @@ import Summary from "@/components/UI/Summary";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
+import { initFirebase } from "@/firebase";
+import useAuth from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
+import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 interface Props {
@@ -15,10 +20,34 @@ interface Props {
 }
 
 function BookAudio({ bookSummary }: Props) {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
 
-  const [audioPlayerDisplay, setAudioPlayerDisplay] = useState(true);
+  const app = initFirebase();
+  const auth = getAuth(app);
+  const { user } = useAuth();
+  const subscription = useSubscription(app);
+
+  const [isUserPremium, setUserPremium] = useState(false);
+  const [premiumStatusName, setPremiumStatusName] = useState("");
+
+  useEffect(() => {
+    const checkPremium = async () => {
+      setUserPremium(subscription.isActive);
+      setPremiumStatusName(subscription.subscriptionName || "");
+    };
+
+    checkPremium();
+  }, [app, auth.currentUser?.uid]);
+
+  useEffect(() => {
+    dispatch(audioPlayerOpen());
+  });
+
+  if (bookSummary?.subscriptionRequired && isUserPremium === false) {
+    return (window.location.href = "/choose-plan");
+  }
 
   return (
     <div id="foryou">
@@ -31,6 +60,7 @@ function BookAudio({ bookSummary }: Props) {
     </div>
   );
 }
+
 export default BookAudio;
 
 export async function getServerSideProps(

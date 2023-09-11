@@ -7,8 +7,13 @@ import requests from "@/utils/requests";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/modalStore";
+import Authentication from "@/components/Authentication";
 
 function BookDetail() {
+  const modal = useSelector((state: RootState) => state.modal.value);
+
   const router = useRouter();
   const { id } = router.query;
   const [bookSummary, setBookSummary] = useState<Book | null>(null);
@@ -35,6 +40,7 @@ function BookDetail() {
   return (
     <div id="foryou">
       <div className="content--wrapper">
+        {modal && <Authentication />}
         <SearchBar />
         <Sidebar />
         {loading ? (

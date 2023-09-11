@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IAuth {
@@ -39,7 +40,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [redirectRoute, setRedirectRoute] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   /// Persisting the user
   useEffect(
@@ -48,12 +51,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (user) {
           // Logged in...
           setUser(user);
-          setLoading(false);
         } else {
           // Not logged in...
           setUser(null);
-          setLoading(true);
-          // router.push("/login");
         }
 
         setInitialLoading(false);
@@ -67,7 +67,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        router.push("/for-you"); // routes the users to the home page after login
+        if (pathname === "" || pathname === "/") {
+          router.push("for-you");
+        } else {
+          router.push(pathname);
+        }
         setLoading(false);
       })
       .catch((error) => alert(error.message))
@@ -80,7 +84,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        router.push("/for-you"); // routes the users to the home page after login
+        if (pathname === "" || pathname === "/") {
+          router.push("for-you");
+        } else {
+          router.push(pathname);
+        }
         setLoading(false);
       })
       .catch((error) => alert(error.message))
@@ -93,7 +101,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInAnonymously(auth)
       .then((userCredential) => {
         setUser(userCredential.user);
-        router.push("/for-you");
+        if (pathname === "" || pathname === "/") {
+          router.push("for-you");
+        } else {
+          router.push(pathname);
+        }
         setLoading(false);
       })
       .catch((error) => alert(error.message))

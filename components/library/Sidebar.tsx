@@ -16,11 +16,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/modalStore";
 
 function Sidebar() {
+  const audioPlayer = useSelector(
+    (state: RootState) => state.audioPlayer.value
+  );
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
-
-  const audioPlayer = useSelector((state: RootState) => state.audioPlayer.value);
-  console.log(audioPlayer);
 
   return (
     <div className="sidebar sidebar--closed">

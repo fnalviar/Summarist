@@ -7,8 +7,9 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { useState, useEffect, useMemo } from "react";
 
-export const useSubscription = async (app: FirebaseApp) => {
+export const useSubscription = (app: FirebaseApp) => {
   const auth = getAuth(app);
   const userId = auth.currentUser?.uid;
 
@@ -17,28 +18,40 @@ export const useSubscription = async (app: FirebaseApp) => {
   const db = getFirestore(app);
   const subscriptionsRef = collection(db, "customers", userId, "subscriptions");
 
-  const activeStatusQuery = query(
-    subscriptionsRef,
-    where("status", "in", ["trialing", "active"])
-  );
+  const activeStatusQuery = useMemo(() => {
+    return query(
+      subscriptionsRef,
+      where("status", "in", ["trialing", "active"])
+    );
+  }, [subscriptionsRef]);
 
-  return new Promise<{ isActive: boolean; subscriptionName: string | null }>(
-    (resolve, reject) => {
-      const unsubscribe = onSnapshot(
-        activeStatusQuery,
-        (snapshot) => {
-          if (snapshot.docs.length === 0) {
-            resolve({ isActive: false, subscriptionName: null });
-          } else {
-            const subscriptionData = snapshot.docs[0].data();
-            const subscriptionName =
-              subscriptionData.items[0].price.product.name || null;
-            resolve({ isActive: true, subscriptionName });
-          }
-          unsubscribe();
-        },
-        reject
-      );
-    }
-  );
+  const [subscriptionData, setSubscriptionData] = useState({
+    isActive: false,
+    subscriptionName: null,
+  });
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      activeStatusQuery,
+      (snapshot) => {
+        if (snapshot.docs.length === 0) {
+          setSubscriptionData({ isActive: false, subscriptionName: null });
+        } else {
+          const subscriptionData = snapshot.docs[0].data();
+          const subscriptionName =
+            subscriptionData.items[0].price.product.name || null;
+          setSubscriptionData({ isActive: true, subscriptionName });
+        }
+      },
+      (error) => {
+        console.error("Error fetching subscription data:", error);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return subscriptionData;
 };

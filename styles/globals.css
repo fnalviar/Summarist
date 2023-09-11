@@ -84,7 +84,7 @@ button:disabled {
 
 .loading__icon {
   animation: spinner 750ms infinite linear;
-  background-color: #fff;
+  color: #fff;
 }
 
 @keyframes spinner {

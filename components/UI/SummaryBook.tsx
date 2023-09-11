@@ -1,8 +1,9 @@
 import useAudioDuration from "@/hooks/useAudioDuration";
-import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
+import useAuth from "@/hooks/useAuth";
+import { modalOpen } from "@/redux/modalSlice";
 import { Book } from "@/types";
-import Link from "next/link";
-import { AiOutlineStar, AiOutlineAudio, AiOutlineRead } from "react-icons/ai";
+import { useRouter } from "next/router";
+import { AiOutlineAudio, AiOutlineRead, AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 import { BsBookmark } from "react-icons/bs";
 import { HiOutlineLightBulb } from "react-icons/hi";
@@ -14,8 +15,19 @@ interface Props {
 
 function SummaryBook({ bookSummary }: Props) {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { user } = useAuth();
+
   const { audioDurationMinutes, audioDurationSeconds } =
     useAudioDuration(bookSummary);
+
+  const noUserHandler = () => {
+    if (!user) {
+      dispatch(modalOpen());
+    } else {
+      router.push(`/player/${bookSummary?.id}`);
+    }
+  };
 
   return (
     <div className="row">
@@ -24,6 +36,7 @@ function SummaryBook({ bookSummary }: Props) {
         <div className="book__wrapper">
           <div className="book__description__container">
             <div className="book__description__title">{bookSummary?.title}</div>
+
             <div className="book__description__author">
               {bookSummary?.author}
             </div>
@@ -79,27 +92,29 @@ function SummaryBook({ bookSummary }: Props) {
             </div>
 
             <div className="book__btn--container">
-              <Link href={`/player/${bookSummary?.id}`}>
-                <button className="book--read__btn">
-                  <div className="book--read__icon">
-                    <AiOutlineRead />
-                  </div>
-                  <div className="book--read__text">Read</div>
-                </button>
-              </Link>
-              <Link
-                href={`/player/${bookSummary?.id}`}
+              <button
+                className="book--read__btn"
                 onClick={() => {
-                  dispatch(audioPlayerOpen());
+                  noUserHandler();
                 }}
               >
-                <button className="book--read__btn">
-                  <div className="book--read__icon">
-                    <AiOutlineAudio />
-                  </div>
-                  <div className="book--read__text">Listen</div>
-                </button>
-              </Link>
+                <div className="book--read__icon">
+                  <AiOutlineRead />
+                </div>
+                <div className="book--read__text">Read</div>
+              </button>
+
+              <button
+                className="book--read__btn"
+                onClick={() => {
+                  noUserHandler();
+                }}
+              >
+                <div className="book--read__icon">
+                  <AiOutlineAudio />
+                </div>
+                <div className="book--read__text">Listen</div>
+              </button>
             </div>
 
             <div className="bookmark__container">

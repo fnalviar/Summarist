@@ -1,8 +1,7 @@
+import useAudioDuration from "@/hooks/useAudioDuration";
 import { Book } from "@/types";
 import { AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
-import Link from "next/link";
-import useAudioDuration from "@/hooks/useAudioDuration";
 
 interface Props {
   books: Book[];

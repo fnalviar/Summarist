@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const useSubscription = (app: FirebaseApp) => {
   const auth = getAuth(app);

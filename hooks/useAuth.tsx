@@ -7,8 +7,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IAuth {
@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [redirectRoute, setRedirectRoute] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
 

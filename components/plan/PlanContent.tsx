@@ -1,6 +1,6 @@
 import useAuth from "@/hooks/useAuth";
 import { createCheckoutSession } from "@/stripe/createCheckoutSession";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";

@@ -54,7 +54,7 @@ function BookAudio({ bookSummary }: Props) {
       <div className="content--wrapper">
         <SearchBar />
         <Sidebar />
-        <Summary bookSummary={bookSummary} />
+        <Summary {...{bookSummary}} />
         <AudioPlayer book={bookSummary} />
       </div>
     </div>

@@ -1,6 +1,5 @@
 import useAudioDuration from "@/hooks/useAudioDuration";
 import { Book } from "@/types";
-import { useState } from "react";
 import { BiTimeFive } from "react-icons/bi";
 
 interface Props {

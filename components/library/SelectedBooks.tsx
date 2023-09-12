@@ -1,9 +1,7 @@
 import useAudioDuration from "@/hooks/useAudioDuration";
-import useAuth from "@/hooks/useAuth";
 import { Book } from "@/types";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
-import SelectedBooksSkeleton from "../UI/Skeleton/SelectedBooksSkeleton";
 
 interface Props {
   selectedBook: Book | null;

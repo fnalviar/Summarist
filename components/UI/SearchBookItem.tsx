@@ -1,4 +1,4 @@
-import useAudioDuration from "@/hooks/useAudioDuration";
+import useAudio from "@/hooks/useAudio";
 import { Book } from "@/types";
 import { BiTimeFive } from "react-icons/bi";
 
@@ -7,11 +7,18 @@ interface Props {
 }
 
 function SearchBookItem({ book }: Props) {
-  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(book);
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    book?.audioLink || ""
+  );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <a href={`/book/${book.id}`} className="search__book--link" key={book.id}>
-      <audio src={book.audioLink}></audio>
+      <audio
+        src={book.audioLink}
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+      ></audio>
       <figure
         className="book__image--wrapper"
         style={{ height: "80px", width: "80px", minWidth: "80px" }}
@@ -27,8 +34,7 @@ function SearchBookItem({ book }: Props) {
               <BiTimeFive />
             </div>
             <div className="recommended__book--details-text">
-              {audioDurationMinutes}:
-              {audioDurationSeconds.toString().padStart(2, "0")}
+              {formatMinutes}:{formatSeconds}
             </div>
           </div>
         </div>

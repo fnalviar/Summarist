@@ -1,7 +1,7 @@
-import useAudioDuration from "@/hooks/useAudioDuration";
 import { Book } from "@/types";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
+import useAudio from "@/hooks/useAudio";
 
 interface Props {
   selectedBook: Book | null;
@@ -14,15 +14,21 @@ function SelectedBooks({
   recommendedBooks,
   suggestedBooks,
 }: Props) {
-  const { audioDurationMinutes, audioDurationSeconds } =
-    useAudioDuration(selectedBook);
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    selectedBook?.audioLink || ""
+  );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <div className="row">
       <div className="container">
         <div className="selected__book__container">
           <div className="section__header__title">Selected just for you</div>
-          <audio src={selectedBook?.audioLink}></audio>
+          <audio
+            src={selectedBook?.audioLink}
+            ref={audioRef}
+            onLoadedMetadata={onLoadedMetadata}
+          ></audio>
           <a href="" className="selected__book">
             <div className="selected__book--subtitle">
               {selectedBook?.subTitle}
@@ -48,14 +54,7 @@ function SelectedBooks({
                     <BsPlayFill className="play--icon" />
                   </div>
                   <div className="selected__book--duration">
-                    {audioDurationMinutes.toLocaleString("en-US", {
-                      minimumIntegerDigits: 2,
-                    })}{" "}
-                    mins{" "}
-                    {audioDurationSeconds.toLocaleString("en-US", {
-                      minimumIntegerDigits: 2,
-                    })}{" "}
-                    secs
+                    {formatMinutes} mins {formatSeconds} sec
                   </div>
                 </div>
               </div>

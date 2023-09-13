@@ -1,10 +1,12 @@
-import React, { ChangeEvent } from 'react';
+import useAudio from "@/hooks/useAudio";
+import React, { ChangeEvent } from "react";
 
 interface Props {
   progressBarRef: React.RefObject<HTMLInputElement>;
   audioRef: React.RefObject<HTMLAudioElement>;
   timeProgress: number;
   duration: number;
+  audioLink?: string | null;
 }
 
 function ProgressBar({
@@ -12,6 +14,7 @@ function ProgressBar({
   audioRef,
   timeProgress,
   duration,
+  audioLink,
 }: Props) {
   const handleProgressChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
@@ -20,20 +23,14 @@ function ProgressBar({
     }
   };
 
-  const formatTime = (time: number) => {
-    if (!isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return `${formatMinutes}:${formatSeconds}`;
-    }
-    return "00:00";
-  };
+  const { formatTime } = useAudio(audioLink || "");
 
   return (
     <div className="audio__progress--container">
-      <div className="audio__time">{formatTime(timeProgress)}</div>
+      <div className="audio__time">
+        {formatTime(timeProgress).formatMinutes}:
+        {formatTime(timeProgress).formatSeconds}
+      </div>
       <input
         className="audio__progress--bar"
         type="range"
@@ -41,7 +38,10 @@ function ProgressBar({
         defaultValue={String(timeProgress)}
         onChange={handleProgressChange}
       />
-      <div className="audio__time">{formatTime(duration)}</div>
+      <div className="audio__time">
+        {formatTime(duration).formatMinutes}:
+        {formatTime(duration).formatSeconds}
+      </div>
     </div>
   );
 }

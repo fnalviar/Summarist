@@ -72,6 +72,7 @@ function AudioPlayer({ book }: Props) {
           audioRef,
           timeProgress,
           duration,
+          audioLink: book?.audioLink
         }}
       />
     </div>

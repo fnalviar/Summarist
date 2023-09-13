@@ -1,4 +1,4 @@
-import useAudioDuration from "@/hooks/useAudioDuration";
+import useAudio from "@/hooks/useAudio";
 import { Book } from "@/types";
 import { AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
@@ -8,7 +8,10 @@ interface Props {
 }
 
 function BookItem({ book }: Props) {
-  const { audioDurationMinutes, audioDurationSeconds } = useAudioDuration(book);
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    book?.audioLink || ""
+  );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <a href={`/book/${book.id}`} key={book.id}>
@@ -16,7 +19,11 @@ function BookItem({ book }: Props) {
         {book.subscriptionRequired && (
           <div className="book--premium">Premium</div>
         )}
-        <audio src={book.audioLink}></audio>
+        <audio
+          src={book.audioLink}
+          ref={audioRef}
+          onLoadedMetadata={onLoadedMetadata}
+        ></audio>
         <figure className="book__image--wrapper">
           <img src={book.imageLink} alt="Book" className="book__img" />
         </figure>
@@ -29,8 +36,7 @@ function BookItem({ book }: Props) {
               <BiTimeFive className="recommended__book--details-icon" />
             </div>
             <div className="recommended__book--details-text">
-              {audioDurationMinutes}:
-              {audioDurationSeconds.toString().padStart(2, "0")}
+              {formatMinutes}:{formatSeconds}
             </div>
           </div>
           <div className="recommended__book--details">

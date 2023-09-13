@@ -44,8 +44,6 @@ function Sidebar() {
     }
   };
 
-  console.log(user);
-
   return (
     <>
       <div

@@ -23,6 +23,7 @@ import {
   fontSizeSmall,
   fontSizeXLarge,
 } from "@/redux/fontSizeSlice";
+import Link from "next/link";
 
 function Sidebar() {
   const audioPlayer = useSelector(
@@ -63,7 +64,7 @@ function Sidebar() {
           }`}
         >
           <div className="sidebar__top">
-            <a href="/for-you" className="sidebar__link--wrapper">
+            <Link href="/for-you" className="sidebar__link--wrapper">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/for-you" ? "active--tab" : ""
@@ -73,8 +74,8 @@ function Sidebar() {
                 <AiOutlineHome className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">For you</div>
-            </a>
-            <a href="/library" className="sidebar__link--wrapper">
+            </Link>
+            <Link href="/library" className="sidebar__link--wrapper">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/library" ? "active--tab" : ""
@@ -84,8 +85,8 @@ function Sidebar() {
                 <BsBookmark className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">My Library</div>
-            </a>
-            <a
+            </Link>
+            <Link
               href=""
               className="sidebar__link--wrapper sidebar__link--not-allowed"
             >
@@ -94,8 +95,8 @@ function Sidebar() {
                 <LiaHighlighterSolid className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">Highlights</div>
-            </a>
-            <a
+            </Link>
+            <Link
               href=""
               className="sidebar__link--wrapper sidebar__link--not-allowed"
             >
@@ -104,7 +105,7 @@ function Sidebar() {
                 <AiOutlineSearch className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">Search</div>
-            </a>
+            </Link>
 
             <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
               <div
@@ -149,7 +150,7 @@ function Sidebar() {
           </div>
 
           <div className="sidebar__bottom">
-            <a href="/settings" className="sidebar__link--wrapper">
+            <Link href="/settings" className="sidebar__link--wrapper">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/settings" ? "active--tab" : ""
@@ -159,8 +160,8 @@ function Sidebar() {
                 <AiOutlineSetting className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text">Settings</div>
-            </a>
-            <a
+            </Link>
+            <Link
               href=""
               className="sidebar__link--wrapper sidebar__link--not-allowed"
             >
@@ -169,7 +170,7 @@ function Sidebar() {
                 <BiHelpCircle className="sidebar__icons" />
               </div>
               <div className="sidebar__link--text ">Help & Support</div>
-            </a>
+            </Link>
 
             {user ? (
               <div

@@ -4,6 +4,7 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import SettingsLogin from "./SettingsLogin";
+import Link from "next/link";
 
 function SettingsComponent() {
   const app = initFirebase();
@@ -38,12 +39,12 @@ function SettingsComponent() {
                 ) : (
                   <>
                     Basic
-                    <a
+                    <Link
                       href="/choose-plan"
                       className="btn settings__upgrade--btn"
                     >
                       Upgrade to Premium
-                    </a>
+                    </Link>
                   </>
                 )}
               </div>

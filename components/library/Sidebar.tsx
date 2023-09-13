@@ -44,6 +44,8 @@ function Sidebar() {
     }
   };
 
+  console.log(user);
+
   return (
     <>
       <div
@@ -173,12 +175,7 @@ function Sidebar() {
             </Link>
 
             {user ? (
-              <div
-                className="sidebar__link--wrapper"
-                onClick={() => {
-                  logout;
-                }}
-              >
+              <div className="sidebar__link--wrapper" onClick={logout}>
                 <div className={`sidebar__link--line `}></div>
                 <div className="sidebar__icon--wrapper">
                   <BiLogIn className="sidebar__icons" />

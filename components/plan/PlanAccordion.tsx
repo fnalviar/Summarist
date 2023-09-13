@@ -62,7 +62,7 @@ function PlanAccordion() {
               className="accordion__header"
             >
               <Typography className="accordion__title">
-                What's included in the Premium plan?
+                {" What's included in the Premium plan?"}
               </Typography>
             </AccordionSummary>
             <AccordionDetails className="accordion__collapse">

@@ -41,6 +41,8 @@ export const useSubscription = (app: FirebaseApp) => {
           const subscriptionName =
             subscriptionData.items[0].price.product.name || null;
           setSubscriptionData({ isActive: true, subscriptionName });
+          
+          console.log("subscriptionData", subscriptionData);
         }
       },
       (error) => {

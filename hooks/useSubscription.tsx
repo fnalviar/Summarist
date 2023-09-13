@@ -27,7 +27,7 @@ export const useSubscription = (app: FirebaseApp) => {
 
   const [subscriptionData, setSubscriptionData] = useState({
     isActive: false,
-    subscriptionName: null,
+    subscriptionName: "",
   });
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const useSubscription = (app: FirebaseApp) => {
       activeStatusQuery,
       (snapshot) => {
         if (snapshot.docs.length === 0) {
-          setSubscriptionData({ isActive: false, subscriptionName: null });
+          setSubscriptionData({ isActive: false, subscriptionName: "" });
         } else {
           const subscriptionData = snapshot.docs[0].data();
           const subscriptionName =
@@ -51,7 +51,7 @@ export const useSubscription = (app: FirebaseApp) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [userId]);
 
   return subscriptionData;
 };

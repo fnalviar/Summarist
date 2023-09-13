@@ -1,3 +1,4 @@
+import { RootState } from "@/redux/modalStore";
 import { sideBarClose, sideBarOpen } from "@/redux/sideBarSlice";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
@@ -6,7 +7,6 @@ import { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBookCard from "../UI/SearchBookCard";
-import { RootState } from "@/redux/modalStore";
 
 function SearchBar() {
   const [userInput, setUserInput] = useState("");
@@ -24,6 +24,7 @@ function SearchBar() {
       const searchBookResponse = (
         await axios.get(requests.fetchSearchBook(search as string))
       ).data;
+      console.log("searchBookResponse", searchBookResponse);
       setBooks(searchBookResponse);
     } catch (error) {
       console.log(error);

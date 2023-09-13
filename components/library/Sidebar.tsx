@@ -5,6 +5,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BiHelpCircle, BiLogIn } from "react-icons/bi";
+import { RxLetterCaseCapitalize } from "react-icons/rx";
 import { BsBookmark } from "react-icons/bs";
 import { LiaHighlighterSolid } from "react-icons/lia";
 import { useDispatch } from "react-redux";
@@ -16,18 +17,23 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import Logo from "../../assets/logo.png";
+import {
+  fontSizeLarge,
+  fontSizeMedium,
+  fontSizeSmall,
+  fontSizeXLarge,
+} from "@/redux/fontSizeSlice";
 
 function Sidebar() {
   const audioPlayer = useSelector(
     (state: RootState) => state.audioPlayer.value
   );
   const sideBar = useSelector((state: RootState) => state.sideBar.value);
+  const fontSize = useSelector((state: RootState) => state.fontSize.value);
 
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
   const pathname = usePathname();
-
-  console.log("pathname", pathname);
 
   const sideBarHandler = () => {
     if (sideBar === false) {
@@ -99,7 +105,49 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">Search</div>
             </a>
+
+            <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
+              <div
+                className={`sidebar__link--text sidebar__font--size-icon
+                ${fontSize === "16px" ? "sidebar__font--size-icon--active" : ""}
+                `}
+                onClick={() => dispatch(fontSizeSmall())}
+              >
+                <RxLetterCaseCapitalize className="sidebar__font--size-icon-small" />
+              </div>
+              <div
+                className={`sidebar__link--text sidebar__font--size-icon
+                 ${
+                   fontSize === "18px" ? "sidebar__font--size-icon--active" : ""
+                 }
+                 `}
+                onClick={() => dispatch(fontSizeMedium())}
+              >
+                <RxLetterCaseCapitalize className="sidebar__font--size-icon-medium" />
+              </div>
+              <div
+                className={`sidebar__link--text sidebar__font--size-icon
+                 ${
+                   fontSize === "22px" ? "sidebar__font--size-icon--active" : ""
+                 }
+                 `}
+                onClick={() => dispatch(fontSizeLarge())}
+              >
+                <RxLetterCaseCapitalize className="sidebar__font--size-icon-large" />
+              </div>
+              <div
+                className={`sidebar__link--text sidebar__font--size-icon
+                 ${
+                   fontSize === "26px" ? "sidebar__font--size-icon--active" : ""
+                 }
+                 `}
+                onClick={() => dispatch(fontSizeXLarge())}
+              >
+                <RxLetterCaseCapitalize className="sidebar__font--size-icon-xlarge" />
+              </div>
+            </div>
           </div>
+
           <div className="sidebar__bottom">
             <a href="/settings" className="sidebar__link--wrapper">
               <div

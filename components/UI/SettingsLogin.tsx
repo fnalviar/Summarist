@@ -17,7 +17,6 @@ function SettingsLogin() {
         className="btn login--btn"
         onClick={() => {
           dispatch(modalOpen());
-          console.log("Login button clicked");
         }}
       >
         Login

@@ -4,10 +4,12 @@ import PlanHeader from "@/components/plan/PlanHeader";
 
 function ChoosePlan() {
   return (
-    <div className="plan">
-      <PlanHeader />
-      <PlanContent />
-      <PlanAccordion />
+    <div className="wrapper wrapper__full">
+      <div className="plan">
+        <PlanHeader />
+        <PlanContent />
+        <PlanAccordion />
+      </div>
     </div>
   );
 }

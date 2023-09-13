@@ -1,12 +1,12 @@
+import app, { db } from "@/firebase";
+import { getStripePayments } from "@invertase/firestore-stripe-payments";
 import {
+  DocumentData,
   addDoc,
   collection,
   onSnapshot,
-  DocumentData,
 } from "firebase/firestore";
 import getStripe from "./initializeStripe";
-import app, { db } from "@/firebase";
-import { getStripePayments } from "@invertase/firestore-stripe-payments";
 
 const payments = getStripePayments(app, {
   productsCollection: "products",

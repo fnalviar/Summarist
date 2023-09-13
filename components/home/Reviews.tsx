@@ -1,10 +1,8 @@
-import { RootState } from "@/redux/modalStore";
-import { useDispatch, useSelector } from "react-redux";
 import { modalOpen } from "@/redux/modalSlice";
 import { BsStarFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 
 function Reviews() {
-  const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
 
   return (

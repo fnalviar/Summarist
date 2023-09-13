@@ -3,7 +3,6 @@ import AudioPlayer from "@/components/audio/AudioPlayer";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import { initFirebase } from "@/firebase";
-import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
 import { Book } from "@/types";
@@ -11,7 +10,6 @@ import requests from "@/utils/requests";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -21,12 +19,9 @@ interface Props {
 
 function BookAudio({ bookSummary }: Props) {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const { id } = router.query;
 
   const app = initFirebase();
   const auth = getAuth(app);
-  const { user } = useAuth();
   const subscription = useSubscription(app);
 
   const [isUserPremium, setUserPremium] = useState(false);
@@ -54,7 +49,7 @@ function BookAudio({ bookSummary }: Props) {
       <div className="content--wrapper">
         <SearchBar />
         <Sidebar />
-        <Summary bookSummary={bookSummary} />
+        <Summary {...{ bookSummary }} />
         <AudioPlayer book={bookSummary} />
       </div>
     </div>

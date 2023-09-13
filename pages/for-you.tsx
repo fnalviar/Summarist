@@ -56,9 +56,7 @@ const ForYou = () => {
           <SelectedBooksSkeleton />
         ) : (
           <SelectedBooks
-            selectedBook={selectedBook}
-            recommendedBooks={recommendedBooks}
-            suggestedBooks={recommendedBooks}
+            {...{ selectedBook, recommendedBooks, suggestedBooks }}
           />
         )}
       </div>

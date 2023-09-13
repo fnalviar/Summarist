@@ -1,12 +1,11 @@
 import useAuth from "@/hooks/useAuth";
 import { modalClose } from "@/redux/modalSlice";
-import { RootState } from "@/redux/modalStore";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineClose, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface Inputs {
   email: string;
@@ -18,7 +17,6 @@ function Authentication() {
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const { signIn, signUp, guestSignIn, loading } = useAuth();
 
-  const modal = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
 
   const {

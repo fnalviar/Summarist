@@ -30,11 +30,16 @@ function BookAudio({ bookSummary }: Props) {
   useEffect(() => {
     const checkPremium = async () => {
       setUserPremium(subscription.isActive);
-      setPremiumStatusName(subscription.subscriptionName || "");
+      setPremiumStatusName(subscription.subscriptionName);
     };
 
     checkPremium();
-  }, [app, auth.currentUser?.uid]);
+  }, [
+    app,
+    auth.currentUser?.uid,
+    subscription.isActive,
+    subscription.subscriptionName,
+  ]);
 
   useEffect(() => {
     dispatch(audioPlayerOpen());

@@ -1,4 +1,4 @@
-import useAudioDuration from "@/hooks/useAudioDuration";
+import useAudio from "@/hooks/useAudio";
 import useAuth from "@/hooks/useAuth";
 import { modalOpen } from "@/redux/modalSlice";
 import { Book } from "@/types";
@@ -18,8 +18,10 @@ function SummaryBook({ bookSummary }: Props) {
   const router = useRouter();
   const { user } = useAuth();
 
-  const { audioDurationMinutes, audioDurationSeconds } =
-    useAudioDuration(bookSummary);
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    bookSummary?.audioLink || ""
+  );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   const noUserHandler = () => {
     if (!user) {
@@ -31,7 +33,11 @@ function SummaryBook({ bookSummary }: Props) {
 
   return (
     <div className="row">
-      <audio src={bookSummary?.audioLink}></audio>
+      <audio
+        src={bookSummary?.audioLink}
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+      ></audio>
       <div className="container">
         <div className="book__wrapper">
           <div className="book__description__container">
@@ -63,13 +69,7 @@ function SummaryBook({ bookSummary }: Props) {
                     <BiTimeFive />
                   </div>
                   <div className="book__duration">
-                    {audioDurationMinutes.toLocaleString("en-US", {
-                      minimumIntegerDigits: 2,
-                    })}
-                    :
-                    {audioDurationSeconds.toLocaleString("en-US", {
-                      minimumIntegerDigits: 2,
-                    })}
+                    {formatMinutes}:{formatSeconds}
                   </div>
                 </div>
 

@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  BsFastForwardCircle,
-  BsFillPlayFill,
-  BsFillPauseFill,
-  BsRewindCircle,
-} from "react-icons/bs";
 import { Forward10Outlined, Replay10Outlined } from "@mui/icons-material";
+import React, { useCallback, useEffect, useRef } from "react";
+import {
+  BsFillPauseFill,
+  BsFillPlayFill
+} from "react-icons/bs";
 
 interface Props {
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;

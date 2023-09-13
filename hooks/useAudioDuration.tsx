@@ -5,31 +5,27 @@ function useAudioDuration(book: Book | null) {
   const [audioDurationMinutes, setAudioDurationMinutes] = useState<number>(0);
   const [audioDurationSeconds, setAudioDurationSeconds] = useState<number>(0);
 
-  async function getAudioDuration(audioUrl: string) {
-    const audio = new Audio();
-    audio.src = audioUrl;
-
-    return new Promise((resolve, reject) => {
-      audio.addEventListener("loadedmetadata", () => {
-        const durationInSeconds = audio.duration;
-        setAudioDurationMinutes(Math.floor(durationInSeconds / 60));
-        setAudioDurationSeconds(Math.floor(durationInSeconds % 60));
-
-        resolve({ audioDurationMinutes, audioDurationSeconds });
-      });
-
-      audio.addEventListener("error", (error) => {
-        reject(error);
-      });
-    });
-  }
-
   useEffect(() => {
     if (!book) return;
 
-    if (book) {
-      getAudioDuration(book.audioLink);
-    }
+    const audio = new Audio();
+    audio.src = book.audioLink;
+
+    audio.addEventListener("loadedmetadata", () => {
+      const durationInSeconds = audio.duration;
+      setAudioDurationMinutes(Math.floor(durationInSeconds / 60));
+      setAudioDurationSeconds(Math.floor(durationInSeconds % 60));
+    });
+
+    audio.addEventListener("error", (error) => {
+      console.error("Audio error:", error);
+    });
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      audio.removeEventListener("loadedmetadata", () => {});
+      audio.removeEventListener("error", () => {});
+    };
   }, [book]);
 
   return { audioDurationMinutes, audioDurationSeconds };

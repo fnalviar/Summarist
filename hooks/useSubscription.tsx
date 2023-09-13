@@ -37,12 +37,10 @@ export const useSubscription = (app: FirebaseApp) => {
         if (snapshot.docs.length === 0) {
           setSubscriptionData({ isActive: false, subscriptionName: "" });
         } else {
-          const subscriptionData = snapshot.docs[0].data();
+          const subscriptionDataResponse = snapshot.docs[0].data();
           const subscriptionName =
-            subscriptionData.items[0].price.product.name || null;
+            subscriptionDataResponse.items[0].price.product.name || "";
           setSubscriptionData({ isActive: true, subscriptionName });
-          
-          console.log("subscriptionData", subscriptionData);
         }
       },
       (error) => {

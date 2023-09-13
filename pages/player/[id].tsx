@@ -27,7 +27,6 @@ function BookAudio({ bookSummary }: Props) {
   const [isUserPremium, setUserPremium] = useState(false);
   const [premiumStatusName, setPremiumStatusName] = useState("");
 
-  
   useEffect(() => {
     const checkPremium = async () => {
       setUserPremium(subscription.isActive);

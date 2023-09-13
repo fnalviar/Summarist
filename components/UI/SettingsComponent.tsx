@@ -30,8 +30,6 @@ function SettingsComponent() {
     subscription.subscriptionName,
   ]);
 
-  console.log(premiumStatusName);
-
   return (
     <div className="container">
       <div className="row">

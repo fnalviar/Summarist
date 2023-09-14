@@ -7,11 +7,11 @@ import SettingsLogin from "./SettingsLogin";
 import Link from "next/link";
 
 function SettingsComponent() {
+  const { user } = useAuth();
+
   const app = initFirebase();
   const auth = getAuth(app);
   const subscription = useSubscription(app);
-
-  const { user } = useAuth();
 
   const [isUserPremium, setUserPremium] = useState(false);
   const [premiumStatusName, setPremiumStatusName] = useState("");

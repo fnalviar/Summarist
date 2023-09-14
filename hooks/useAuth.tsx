@@ -1,4 +1,5 @@
 import { auth } from "@/firebase";
+import { modalClose } from "@/redux/modalSlice";
 import {
   User,
   createUserWithEmailAndPassword,
@@ -10,6 +11,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface IAuth {
   user: User | null;
@@ -42,6 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch();
 
   /// Persisting the user
   useEffect(
@@ -74,7 +77,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
       })
       .catch((error) => alert(error.message))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        dispatch(modalClose());
+      });
   };
 
   const signIn = async (email: string, password: string) => {
@@ -91,7 +97,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
       })
       .catch((error) => alert(error.message))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        dispatch(modalClose());
+      });
   };
 
   const guestSignIn = async () => {
@@ -108,7 +117,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
       })
       .catch((error) => alert(error.message))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        dispatch(modalClose());
+      });
   };
 
   const logout = async () => {
@@ -119,7 +131,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
       })
       .catch((error) => alert(error.message))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        dispatch(modalClose());
+      });
   };
 
   const memoedValue = useMemo(

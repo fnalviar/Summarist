@@ -1,9 +1,7 @@
 import { Forward10Outlined, Replay10Outlined } from "@mui/icons-material";
+import { User } from "firebase/auth";
 import React, { useCallback, useEffect, useRef } from "react";
-import {
-  BsFillPauseFill,
-  BsFillPlayFill
-} from "react-icons/bs";
+import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 
 interface Props {
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
@@ -12,6 +10,7 @@ interface Props {
   setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  user: User | null;
 }
 
 function Controls({
@@ -21,6 +20,7 @@ function Controls({
   setTimeProgress,
   isPlaying,
   setIsPlaying,
+  user,
 }: Props) {
   const playAnimationRef = useRef<number | null>(null);
 
@@ -70,16 +70,25 @@ function Controls({
   return (
     <div className="audio__controls__container">
       <div className="audio__controls">
-        <button className="audio__controls--btn" onClick={skipBackward}>
+        <button
+          className="audio__controls--btn"
+          onClick={skipBackward}
+          disabled={!user}
+        >
           <Replay10Outlined />
         </button>
         <button
           className="audio__controls--btn audio__controls--btn--play"
           onClick={togglePlayPause}
+          disabled={!user}
         >
           {isPlaying ? <BsFillPauseFill /> : <BsFillPlayFill />}
         </button>
-        <button className="audio__controls--btn" onClick={skipForward}>
+        <button
+          className="audio__controls--btn"
+          onClick={skipForward}
+          disabled={!user}
+        >
           <Forward10Outlined />
         </button>
       </div>

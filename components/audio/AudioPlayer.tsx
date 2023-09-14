@@ -5,12 +5,15 @@ import { useDispatch } from "react-redux";
 import Controls from "../audio/Controls";
 import DisplayTrack from "../audio/DisplayTrack";
 import ProgressBar from "../audio/ProgressBar";
+import useAuth from "@/hooks/useAuth";
+import useAudio from "@/hooks/useAudio";
 
 interface Props {
   book: Book | null;
 }
 
 function AudioPlayer({ book }: Props) {
+  const { user } = useAuth();
   const dispatch = useDispatch();
 
   const [timeProgress, setTimeProgress] = useState<number>(0);
@@ -64,6 +67,7 @@ function AudioPlayer({ book }: Props) {
           setTimeProgress,
           isPlaying,
           setIsPlaying,
+          user,
         }}
       />
       <ProgressBar
@@ -72,7 +76,7 @@ function AudioPlayer({ book }: Props) {
           audioRef,
           timeProgress,
           duration,
-          audioLink: book?.audioLink
+          audioLink: book?.audioLink,
         }}
       />
     </div>

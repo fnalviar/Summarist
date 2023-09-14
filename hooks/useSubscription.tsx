@@ -13,7 +13,12 @@ export const useSubscription = (app: FirebaseApp) => {
   const auth = getAuth(app);
   const userId = auth.currentUser?.uid;
 
-  if (!userId) throw new Error("User not logged in");
+  if (!userId) {
+    return {
+      isActive: false,
+      subscriptionName: "",
+    };
+  }
 
   const db = getFirestore(app);
   const subscriptionsRef = collection(db, "customers", userId, "subscriptions");
@@ -31,6 +36,8 @@ export const useSubscription = (app: FirebaseApp) => {
   });
 
   useEffect(() => {
+    if (!userId) return;
+
     const unsubscribe = onSnapshot(
       activeStatusQuery,
       (snapshot) => {

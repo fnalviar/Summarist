@@ -42,6 +42,7 @@ function SearchBar() {
 
   useEffect(() => {
     const getData = setTimeout(() => {
+      //debounce
       fetchSearchBook(userInput);
     }, 500);
 

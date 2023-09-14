@@ -1,5 +1,5 @@
 import useAuth from "@/hooks/useAuth";
-import { modalClose } from "@/redux/modalSlice";
+import { modalClose, modalOpen } from "@/redux/modalSlice";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineClose, AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -28,30 +28,23 @@ function Authentication() {
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (loginModal) {
       await signIn(email, password);
-
-      setTimeout(() => {
-        dispatch(modalClose());
-      }, 500);
     } else {
       await signUp(email, password);
-
-      setTimeout(() => {
-        dispatch(modalClose());
-      }, 500);
     }
   };
 
   const guestSignInHandler = async () => {
     await guestSignIn();
+  };
 
-    setTimeout(() => {
-      dispatch(modalClose());
-    }, 500);
+  const handleAuthClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Prevent the click event from propagating to auth__wrapper
+    e.stopPropagation();
   };
 
   return (
-    <div className="auth__wrapper">
-      <div className="auth">
+    <div className="auth__wrapper" onClick={() => dispatch(modalClose())}>
+      <div className="auth" onClick={handleAuthClick}>
         {forgotPasswordModal ? (
           <>
             <div className="auth__content">

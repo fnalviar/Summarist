@@ -1,7 +1,9 @@
-import useAudio from "@/hooks/useAudio";
+import { initFirebase } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
 import { modalOpen } from "@/redux/modalSlice";
 import { Book } from "@/types";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { AiOutlineAudio, AiOutlineRead, AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
@@ -11,21 +13,35 @@ import { useDispatch } from "react-redux";
 
 interface Props {
   bookSummary: Book | null;
+  formatMinutes: string;
+  formatSeconds: string;
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  onLoadedMetadata: any;
 }
 
-function SummaryBook({ bookSummary }: Props) {
+function SummaryBook({
+  bookSummary,
+  formatMinutes,
+  formatSeconds,
+  audioRef,
+  onLoadedMetadata,
+}: Props) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useAuth();
 
-  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
-    bookSummary?.audioLink || ""
-  );
-  const { formatMinutes, formatSeconds } = formatTime(duration);
+  const app = initFirebase();
+  const auth = getAuth(app);
+  const subscription = useSubscription(app);
 
   const noUserHandler = () => {
     if (!user) {
       dispatch(modalOpen());
+    } else if (
+      bookSummary?.subscriptionRequired &&
+      subscription.isActive === false
+    ) {
+      return (window.location.href = "/choose-plan");
     } else {
       router.push(`/player/${bookSummary?.id}`);
     }

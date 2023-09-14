@@ -3,6 +3,8 @@ import SummaryBookSkeleton from "@/components/UI/Skeleton/SummaryBookSkeleton";
 import SummaryBook from "@/components/UI/SummaryBook";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
+import useAudio from "@/hooks/useAudio";
+import useAuth from "@/hooks/useAuth";
 import { RootState } from "@/redux/modalStore";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
@@ -33,6 +35,12 @@ function BookDetail() {
     }
   }
 
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    bookSummary?.audioLink || ""
+  );
+
+  const { formatMinutes, formatSeconds } = formatTime(duration);
+
   useEffect(() => {
     fetchBook();
   }, [id]);
@@ -46,7 +54,15 @@ function BookDetail() {
         {loading ? (
           <SummaryBookSkeleton />
         ) : (
-          <SummaryBook bookSummary={bookSummary} />
+          <SummaryBook
+            {...{
+              bookSummary,
+              formatMinutes,
+              formatSeconds,
+              audioRef,
+              onLoadedMetadata,
+            }}
+          />
         )}
       </div>
     </div>

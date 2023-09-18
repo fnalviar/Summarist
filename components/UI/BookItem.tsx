@@ -4,6 +4,7 @@ import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Book } from "@/types";
 import { getAuth } from "firebase/auth";
+import Link from "next/link";
 import { AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 
@@ -22,7 +23,7 @@ function BookItem({ book }: Props) {
   const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
-    <a href={`/book/${book.id}`} key={book.id}>
+    <Link href={`/book/${book.id}`} key={book.id}>
       <div className="recommended--books--link">
         {book.subscriptionRequired && subscription.isActive === false && (
           <div className="book--premium">Premium</div>
@@ -57,7 +58,7 @@ function BookItem({ book }: Props) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 export default BookItem;

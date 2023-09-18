@@ -62,6 +62,7 @@ function Sidebar() {
           className={`sidebar__wrapper ${
             audioPlayer ? "sidebar__wrapper--audio" : ""
           }`}
+          style={{height: `calc(100vh - 240px)`}}
         >
           <div className="sidebar__top">
             <Link href="/for-you" className="sidebar__link--wrapper">
@@ -75,7 +76,7 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">For you</div>
             </Link>
-            <Link href="/library" className="sidebar__link--wrapper">
+            <Link href="" className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/library" ? "active--tab" : ""

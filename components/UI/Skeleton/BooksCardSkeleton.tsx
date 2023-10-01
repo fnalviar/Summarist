@@ -2,10 +2,10 @@ import Skeleton from "./Skeleton";
 
 function BooksCardSkeleton() {
   return (
-    <div className="recommended--books__container">
+    <div className="recommended--books__container--skeleton">
       {new Array(5).fill(0).map((_, index) => (
         <div key={index}>
-          <div className="recommended--books--link">
+          <div>
             <figure className="book__image--wrapper">
               <Skeleton width={"172px"} height={"172px"} />
             </figure>

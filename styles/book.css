@@ -105,7 +105,8 @@
   margin-bottom: 16px;
 }
 
-.recommended--books__container {
+.recommended--books__container,
+.recommended--books__container--skeleton {
   display: flex;
   overflow-x: auto;
   gap: 16px;

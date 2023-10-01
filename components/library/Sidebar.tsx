@@ -62,7 +62,6 @@ function Sidebar() {
           className={`sidebar__wrapper ${
             audioPlayer ? "sidebar__wrapper--audio" : ""
           }`}
-          style={{height: `calc(100vh - 240px)`}}
         >
           <div className="sidebar__top">
             <Link href="/for-you" className="sidebar__link--wrapper">

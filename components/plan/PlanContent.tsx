@@ -1,6 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 import { createCheckoutSession } from "@/stripe/createCheckoutSession";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaHandshake } from "react-icons/fa";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiPlantFill } from "react-icons/ri";
@@ -103,7 +104,11 @@ function PlanContent() {
             <>
               <span className="plan__btn--container">
                 <button className="btn plan__btn" onClick={subscribeToPlan}>
-                  <span>Start your free 7-day trial</span>
+                  {loading ? (
+                    <AiOutlineLoading3Quarters className="loading__icon" />
+                  ) : (
+                    <span>Start your free 7-day trial</span>
+                  )}
                 </button>
               </span>
               <div className="plan__disclaimer">
@@ -116,7 +121,11 @@ function PlanContent() {
             <>
               <span className="plan__btn--container">
                 <button className="btn plan__btn" onClick={subscribeToPlan}>
-                  <span>Start your first month</span>
+                  {loading ? (
+                    <AiOutlineLoading3Quarters className="loading__icon" />
+                  ) : (
+                    <span>Start your first month</span>
+                  )}
                 </button>
               </span>
               <div className="plan__disclaimer">

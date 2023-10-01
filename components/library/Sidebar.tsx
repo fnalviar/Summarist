@@ -75,7 +75,7 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">For you</div>
             </Link>
-            <Link href="/library" className="sidebar__link--wrapper">
+            <Link href="" className="sidebar__link--wrapper sidebar__link--not-allowed">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/library" ? "active--tab" : ""

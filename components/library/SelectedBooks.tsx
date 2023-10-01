@@ -2,6 +2,7 @@ import { Book } from "@/types";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
 import useAudio from "@/hooks/useAudio";
+import Link from "next/link";
 
 interface Props {
   selectedBook: Book | null;
@@ -29,7 +30,7 @@ function SelectedBooks({
             ref={audioRef}
             onLoadedMetadata={onLoadedMetadata}
           ></audio>
-          <a href="" className="selected__book">
+          <Link href="" className="selected__book">
             <div className="selected__book--subtitle">
               {selectedBook?.subTitle}
             </div>
@@ -59,7 +60,7 @@ function SelectedBooks({
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
           <div>
             <div className="section__header__title">Recommended For You</div>
             <div className="section__header__subtitle">

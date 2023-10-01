@@ -1,5 +1,6 @@
 import useAudio from "@/hooks/useAudio";
 import { Book } from "@/types";
+import Link from "next/link";
 import { BiTimeFive } from "react-icons/bi";
 
 interface Props {
@@ -13,7 +14,7 @@ function SearchBookItem({ book }: Props) {
   const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
-    <a href={`/book/${book.id}`} className="search__book--link" key={book.id}>
+    <Link href={`/book/${book.id}`} className="search__book--link" key={book.id}>
       <audio
         src={book.audioLink}
         ref={audioRef}
@@ -39,7 +40,7 @@ function SearchBookItem({ book }: Props) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 export default SearchBookItem;

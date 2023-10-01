@@ -3,6 +3,7 @@ import { RootState } from "@/redux/modalStore";
 import { Book } from "@/types";
 import { useSelector } from "react-redux";
 import SettingsLogin from "./SettingsLogin";
+import Authentication from "../Authentication";
 
 interface Props {
   bookSummary: Book | null;
@@ -10,7 +11,13 @@ interface Props {
 
 function Summary({ bookSummary }: Props) {
   const { user } = useAuth();
+
+  const modal = useSelector((state: RootState) => state.modal.value);
   const fontSize = useSelector((state: RootState) => state.fontSize.value);
+
+  {
+    modal && <Authentication />;
+  }
 
   return (
     <div className="summary__container">

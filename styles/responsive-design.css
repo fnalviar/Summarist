@@ -193,6 +193,10 @@
     max-width: 80px;
   }
 
+  .sidebar__wrapper--audio {
+    height: calc(100vh - 230px);
+  }
+
   .plan__header__container::before {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;

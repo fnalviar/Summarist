@@ -56,7 +56,9 @@ function Sidebar() {
         className={`sidebar ${sideBar ? "sidebar--opened" : "sidebar--closed"}`}
       >
         <div className="sidebar__logo">
-          <Image className="sidebar__logo--img" src={Logo} alt="logo" />
+          <Link href="/for-you">
+            <Image className="sidebar__logo--img" src={Logo} alt="logo" />
+          </Link>
         </div>
         <div
           className={`sidebar__wrapper ${
@@ -75,7 +77,10 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">For you</div>
             </Link>
-            <Link href="" className="sidebar__link--wrapper sidebar__link--not-allowed">
+            <Link
+              href=""
+              className="sidebar__link--wrapper sidebar__link--not-allowed"
+            >
               <div
                 className={`sidebar__link--line ${
                   pathname === "/library" ? "active--tab" : ""

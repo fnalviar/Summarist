@@ -10,8 +10,6 @@ import { RootState } from "@/redux/modalStore";
 import Authentication from "../Authentication";
 
 function SettingsComponent() {
-  const modal = useSelector((state: RootState) => state.modal.value);
-
   const { user } = useAuth();
 
   const app = initFirebase();
@@ -34,8 +32,6 @@ function SettingsComponent() {
     subscription.isActive,
     subscription.subscriptionName,
   ]);
-
-  {modal && <Authentication />}
 
   return (
     <div className="container">

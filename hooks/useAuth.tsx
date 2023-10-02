@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        if (pathname === "") {
+        if (pathname === "" || pathname === "/") {
           router.push("for-you");
         } else {
           router.push(pathname);

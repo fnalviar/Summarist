@@ -8,9 +8,7 @@ interface Props {
 }
 
 function SearchBookItem({ book }: Props) {
-  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
-    book?.audioLink || ""
-  );
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio();
   const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (

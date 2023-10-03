@@ -21,13 +21,19 @@ export const useSubscription = (app: FirebaseApp) => {
   }
 
   const db = getFirestore(app);
-  const subscriptionsRef = collection(db, "customers", userId, "subscriptions");
+
+  const subscriptionsRef = userId
+    ? collection(db, "customers", userId, "subscriptions")
+    : null;
 
   const activeStatusQuery = useMemo(() => {
-    return query(
-      subscriptionsRef,
-      where("status", "in", ["trialing", "active"])
-    );
+    if (subscriptionsRef) {
+      return query(
+        subscriptionsRef,
+        where("status", "in", ["trialing", "active"])
+      );
+    }
+    return null;
   }, [subscriptionsRef]);
 
   const [subscriptionData, setSubscriptionData] = useState({
@@ -36,17 +42,17 @@ export const useSubscription = (app: FirebaseApp) => {
   });
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId || !activeStatusQuery) return;
 
     const unsubscribe = onSnapshot(
       activeStatusQuery,
       (snapshot) => {
-        if (snapshot.docs.length === 0) {
+        if (snapshot.docs && snapshot.docs.length === 0) {
           setSubscriptionData({ isActive: false, subscriptionName: "" });
         } else {
           const subscriptionDataResponse = snapshot.docs[0].data();
           const subscriptionName =
-            subscriptionDataResponse.items[0].price.product.name || "";
+            subscriptionDataResponse.items[0]?.price?.product?.name || "";
           setSubscriptionData({ isActive: true, subscriptionName });
         }
       },
@@ -58,7 +64,7 @@ export const useSubscription = (app: FirebaseApp) => {
     return () => {
       unsubscribe();
     };
-  }, [userId]);
+  }, [userId, activeStatusQuery]);
 
   return subscriptionData;
 };

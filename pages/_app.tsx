@@ -15,12 +15,15 @@ import "@/styles/skeleton.css";
 import "@/styles/responsive-design.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import { AudioProvider } from "@/hooks/useAudio";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={modalStore}>
       <AuthProvider>
-        <Component {...pageProps} />
+        <AudioProvider>
+          <Component {...pageProps} />
+        </AudioProvider>
       </AuthProvider>
     </Provider>
   );

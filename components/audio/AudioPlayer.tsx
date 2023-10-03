@@ -1,3 +1,4 @@
+import useAuth from "@/hooks/useAuth";
 import { audioPlayerOpen } from "@/redux/audioPlayerSlice";
 import { Book } from "@/types";
 import { useEffect, useRef, useState } from "react";
@@ -5,8 +6,6 @@ import { useDispatch } from "react-redux";
 import Controls from "../audio/Controls";
 import DisplayTrack from "../audio/DisplayTrack";
 import ProgressBar from "../audio/ProgressBar";
-import useAuth from "@/hooks/useAuth";
-import useAudio from "@/hooks/useAudio";
 
 interface Props {
   book: Book | null;

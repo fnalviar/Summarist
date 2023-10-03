@@ -4,7 +4,6 @@ import SummaryBook from "@/components/UI/SummaryBook";
 import SearchBar from "@/components/library/SearchBar";
 import Sidebar from "@/components/library/Sidebar";
 import useAudio from "@/hooks/useAudio";
-import useAuth from "@/hooks/useAuth";
 import { RootState } from "@/redux/modalStore";
 import { Book } from "@/types";
 import requests from "@/utils/requests";
@@ -18,8 +17,12 @@ function BookDetail() {
 
   const router = useRouter();
   const { id } = router.query;
+
   const [bookSummary, setBookSummary] = useState<Book | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio();
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   async function fetchBook() {
     setLoading(true);
@@ -34,12 +37,6 @@ function BookDetail() {
       setLoading(false);
     }
   }
-
-  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
-    bookSummary?.audioLink || ""
-  );
-
-  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   useEffect(() => {
     fetchBook();

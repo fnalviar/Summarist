@@ -1,8 +1,8 @@
 import { Book } from "@/types";
 import { BsPlayFill } from "react-icons/bs";
 import BooksCard from "../UI/BooksCard";
-import useAudio from "@/hooks/useAudio";
 import Link from "next/link";
+import useAudio from "@/hooks/useAudio";
 
 interface Props {
   selectedBook: Book | null;
@@ -15,9 +15,8 @@ function SelectedBooks({
   recommendedBooks,
   suggestedBooks,
 }: Props) {
-  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
-    selectedBook?.audioLink || ""
-  );
+  const { duration, formatTime, audioRef, onLoadedMetadata } =
+    useAudio();
   const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
@@ -66,12 +65,24 @@ function SelectedBooks({
             <div className="section__header__subtitle">
               We think {"you’ll"} like these
             </div>
-            <BooksCard books={recommendedBooks} />
+            <BooksCard
+              books={recommendedBooks}
+              audioRef={audioRef}
+              onLoadedMetadata={onLoadedMetadata}
+              formatMinutes={formatMinutes}
+              formatSeconds={formatSeconds}
+            />
           </div>
           <div>
             <div className="section__header__title">Suggested Books</div>
             <div className="section__header__subtitle">Browse those books</div>
-            <BooksCard books={suggestedBooks} />
+            <BooksCard
+              books={suggestedBooks}
+              audioRef={audioRef}
+              onLoadedMetadata={onLoadedMetadata}
+              formatMinutes={formatMinutes}
+              formatSeconds={formatSeconds}
+            />
           </div>
         </div>
       </div>

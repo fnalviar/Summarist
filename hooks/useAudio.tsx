@@ -1,29 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-interface Props {
-  audioSrc: string;
-  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+interface AudioContextType {
   duration: number;
+  formatTime: (time: number) => {
+    formatMinutes: string;
+    formatSeconds: string;
+  };
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  onLoadedMetadata: any;
 }
 
-function useAudio(audioSrc: string) {
+const AudioContext = createContext<AudioContextType | undefined>(undefined);
+
+interface AudioProviderProps {
+  children: React.ReactNode;
+}
+
+export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    audioRef.current = new Audio(audioSrc);
-    audioRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener(
-          "loadedmetadata",
-          onLoadedMetadata
-        );
-        audioRef.current.pause();
-      }
-    };
-  }, [audioSrc]);
+  const formatTime = (time: number) => {
+    if (time && !isNaN(time)) {
+      const minutes = Math.floor(time / 60);
+      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(time % 60);
+      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return { formatMinutes, formatSeconds };
+    }
+    return { formatMinutes: "00", formatSeconds: "00" };
+  };
 
   const onLoadedMetadata = () => {
     if (audioRef.current) {
@@ -32,20 +44,41 @@ function useAudio(audioSrc: string) {
     }
   };
 
-  const formatTime = (time: number) => {
-    if (time && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      //   return `${formatMinutes}:${formatSeconds}`;
-      return { formatMinutes, formatSeconds };
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
+
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener(
+            "loadedmetadata",
+            onLoadedMetadata
+          );
+        }
+      };
     }
-    // return "00:00";
-    return { formatMinutes: "00", formatSeconds: "00" };
+  }, []);
+
+  const audioContextValue: AudioContextType = {
+    duration,
+    formatTime,
+    audioRef,
+    onLoadedMetadata,
   };
 
-  return { duration, formatTime, audioRef, onLoadedMetadata };
-}
+  return (
+    <AudioContext.Provider value={audioContextValue}>
+      {children}
+    </AudioContext.Provider>
+  );
+};
 
-export default useAudio;
+export default function useAudio() {
+  const context = useContext(AudioContext);
+
+  if (!context) {
+    throw new Error("useAudio must be used within an AudioProvider");
+  }
+
+  return context;
+}

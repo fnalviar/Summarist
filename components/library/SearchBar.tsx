@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SearchBookCard from "../UI/SearchBookCard";
 
 function SearchBar() {
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState<string>("");
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
   const shouldRenderSearchBookCard = userInput.trim() !== "";
@@ -41,8 +41,13 @@ function SearchBar() {
   };
 
   useEffect(() => {
+    if (userInput.trim() === "") {
+      setBooks([]);
+      return;
+    }
+
     const getData = setTimeout(() => {
-      //debounce
+      // Debounce
       fetchSearchBook(userInput);
     }, 500);
 

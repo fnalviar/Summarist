@@ -1,41 +1,23 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 
-interface AudioContextType {
-  duration: number;
-  formatTime: (time: number) => {
-    formatMinutes: string;
-    formatSeconds: string;
-  };
-  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
-  onLoadedMetadata: any;
-}
-
-const AudioContext = createContext<AudioContextType | undefined>(undefined);
-
-interface AudioProviderProps {
-  children: React.ReactNode;
-}
-
-export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
+function useAudio(audioSrc: string) {
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const formatTime = (time: number) => {
-    if (time && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return { formatMinutes, formatSeconds };
-    }
-    return { formatMinutes: "00", formatSeconds: "00" };
-  };
+  useEffect(() => {
+    audioRef.current = new Audio(audioSrc);
+    audioRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener(
+          "loadedmetadata",
+          onLoadedMetadata
+        );
+        audioRef.current.pause();
+      }
+    };
+  }, [audioSrc]);
 
   const onLoadedMetadata = () => {
     if (audioRef.current) {
@@ -44,41 +26,20 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
-
-      return () => {
-        if (audioRef.current) {
-          audioRef.current.removeEventListener(
-            "loadedmetadata",
-            onLoadedMetadata
-          );
-        }
-      };
+  const formatTime = (time: number) => {
+    if (time && !isNaN(time)) {
+      const minutes = Math.floor(time / 60);
+      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(time % 60);
+      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      //   return `${formatMinutes}:${formatSeconds}`;
+      return { formatMinutes, formatSeconds };
     }
-  }, []);
-
-  const audioContextValue: AudioContextType = {
-    duration,
-    formatTime,
-    audioRef,
-    onLoadedMetadata,
+    // return "00:00";
+    return { formatMinutes: "00", formatSeconds: "00" };
   };
 
-  return (
-    <AudioContext.Provider value={audioContextValue}>
-      {children}
-    </AudioContext.Provider>
-  );
-};
-
-export default function useAudio() {
-  const context = useContext(AudioContext);
-
-  if (!context) {
-    throw new Error("useAudio must be used within an AudioProvider");
-  }
-
-  return context;
+  return { duration, formatTime, audioRef, onLoadedMetadata };
 }
+
+export default useAudio;

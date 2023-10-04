@@ -21,7 +21,9 @@ function BookDetail() {
   const [bookSummary, setBookSummary] = useState<Book | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio();
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    bookSummary?.audioLink || ""
+  );
   const { formatMinutes, formatSeconds } = formatTime(duration);
 
   async function fetchBook() {

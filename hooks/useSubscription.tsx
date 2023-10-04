@@ -47,7 +47,7 @@ export const useSubscription = (app: FirebaseApp) => {
     const unsubscribe = onSnapshot(
       activeStatusQuery,
       (snapshot) => {
-        if (snapshot.docs && snapshot.docs.length === 0) {
+        if (snapshot.docs && snapshot.docs.length > 0) {
           setSubscriptionData({ isActive: false, subscriptionName: "" });
         } else {
           const subscriptionDataResponse = snapshot.docs[0].data();

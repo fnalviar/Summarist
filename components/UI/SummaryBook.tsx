@@ -16,7 +16,7 @@ interface Props {
   formatMinutes: string;
   formatSeconds: string;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
-  onLoadedMetadata: any;
+  onLoadedMetadata: () => void
 }
 
 function SummaryBook({

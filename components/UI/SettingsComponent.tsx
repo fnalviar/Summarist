@@ -19,6 +19,8 @@ function SettingsComponent() {
   const [isUserPremium, setUserPremium] = useState(false);
   const [premiumStatusName, setPremiumStatusName] = useState("");
 
+  const modal = useSelector((state: RootState) => state.modal.value);
+
   useEffect(() => {
     const checkPremium = async () => {
       setUserPremium(subscription.isActive);
@@ -32,6 +34,10 @@ function SettingsComponent() {
     subscription.isActive,
     subscription.subscriptionName,
   ]);
+
+  if (modal) {
+    return <Authentication />;
+  }
 
   return (
     <div className="container">

@@ -18,6 +18,7 @@ function SelectedBooks({
   const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
     selectedBook?.audioLink || ""
   );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <div className="row">
@@ -54,8 +55,7 @@ function SelectedBooks({
                     <BsPlayFill className="play--icon" />
                   </div>
                   <div className="selected__book--duration">
-                    {formatTime(duration).formatMinutes} mins{" "}
-                    {formatTime(duration).formatSeconds} sec
+                    {formatMinutes} mins {formatSeconds} sec
                   </div>
                 </div>
               </div>

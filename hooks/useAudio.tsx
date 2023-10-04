@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+interface Props {
+  audioSrc: string;
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  duration: number;
+}
+
 function useAudio(audioSrc: string) {
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);

@@ -7,6 +7,13 @@ interface Props {
 }
 
 function BooksCard({ books }: Props) {
+  const audioDataArray = books.map((book) => {
+    return {
+      book,
+      audioData: useAudio(book.audioLink || ""),
+    };
+  });
+  
   return (
     <div className="recommended--books__container">
       {books.map((book, index) => {

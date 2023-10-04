@@ -1,25 +1,30 @@
+import React from "react";
 import useAudio from "@/hooks/useAudio";
-import { Book } from "@/types";
 import BookItem from "./BookItem";
+import { Book } from "@/types";
 
 interface Props {
   books: Book[];
 }
 
 function BooksCard({ books }: Props) {
-  const audioDataArray = books.map((book) => {
-    return {
-      book,
-      audioData: useAudio(book.audioLink || ""),
-    };
-  });
-  
   return (
     <div className="recommended--books__container">
-      {books.map((book, index) => {
-        const audioData = useAudio(book.audioLink || "");
+      {books.map((book) => {
+        const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+          book.audioLink || ""
+        );
 
-        return <BookItem key={book.id} book={book} audioData={audioData} />;
+        return (
+          <BookItem
+            key={book.id}
+            book={book}
+            duration={duration}
+            formatTime={formatTime}
+            audioRef={audioRef}
+            onLoadedMetadata={onLoadedMetadata}
+          />
+        );
       })}
     </div>
   );

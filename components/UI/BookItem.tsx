@@ -8,10 +8,6 @@ import { BiTimeFive } from "react-icons/bi";
 
 interface Props {
   book: Book;
-  audioData: AudioData;
-}
-
-interface AudioData {
   duration: number;
   formatTime: (time: number) => {
     formatMinutes: string;
@@ -21,7 +17,13 @@ interface AudioData {
   onLoadedMetadata: () => void;
 }
 
-function BookItem({ book, audioData }: Props) {
+function BookItem({
+  book,
+  duration,
+  formatTime,
+  audioRef,
+  onLoadedMetadata,
+}: Props) {
   const { user } = useAuth();
   const app = initFirebase();
   const subscription = useSubscription(app);
@@ -34,8 +36,8 @@ function BookItem({ book, audioData }: Props) {
         )}
         <audio
           src={book.audioLink}
-          ref={audioData.audioRef}
-          onLoadedMetadata={audioData.onLoadedMetadata}
+          ref={audioRef}
+          onLoadedMetadata={onLoadedMetadata}
         ></audio>
         <figure className="book__image--wrapper">
           <img src={book.imageLink} alt="Book" className="book__img" />
@@ -49,8 +51,8 @@ function BookItem({ book, audioData }: Props) {
               <BiTimeFive className="recommended__book--details-icon" />
             </div>
             <div className="recommended__book--details-text">
-              {audioData.formatTime(audioData.duration).formatMinutes}:
-              {audioData.formatTime(audioData.duration).formatSeconds}
+              {formatTime(duration).formatMinutes}:
+              {formatTime(duration).formatSeconds}
             </div>
           </div>
           <div className="recommended__book--details">

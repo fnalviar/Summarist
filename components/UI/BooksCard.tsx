@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAudio from "@/hooks/useAudio";
 import BookItem from "./BookItem";
 import { Book } from "@/types";
@@ -11,6 +11,9 @@ function BooksCard({ books }: Props) {
   const audioPropsArray = books.map((book) => {
     return useAudio(book.audioLink || "");
   });
+
+  useEffect(() => {
+  }, [audioPropsArray]);
 
   return (
     <div className="recommended--books__container">

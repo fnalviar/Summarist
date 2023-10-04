@@ -12,14 +12,6 @@ import { useEffect, useMemo, useState } from "react";
 export const useSubscription = (app: FirebaseApp) => {
   const auth = getAuth(app);
   const userId = auth.currentUser?.uid;
-
-  if (!userId) {
-    return {
-      isActive: false,
-      subscriptionName: "",
-    };
-  }
-
   const db = getFirestore(app);
 
   const subscriptionsRef = userId
@@ -42,7 +34,13 @@ export const useSubscription = (app: FirebaseApp) => {
   });
 
   useEffect(() => {
-    if (!userId || !activeStatusQuery) return;
+    if (!userId || !activeStatusQuery) {
+      setSubscriptionData({
+        isActive: false,
+        subscriptionName: "",
+      });
+      return;
+    }
 
     const unsubscribe = onSnapshot(
       activeStatusQuery,
@@ -50,9 +48,9 @@ export const useSubscription = (app: FirebaseApp) => {
         if (snapshot.docs && snapshot.docs.length > 0) {
           setSubscriptionData({ isActive: false, subscriptionName: "" });
         } else {
-          const subscriptionDataResponse = snapshot.docs[0].data();
+          const subscriptionDataResponse = snapshot.docs[0]?.data();
           const subscriptionName =
-            subscriptionDataResponse.items[0]?.price?.product?.name || "";
+            subscriptionDataResponse?.items[0]?.price?.product?.name || "";
           setSubscriptionData({ isActive: true, subscriptionName });
         }
       },

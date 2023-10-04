@@ -11,10 +11,13 @@ function SearchBookItem({ book }: Props) {
   const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
     book?.audioLink || ""
   );
-  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
-    <Link href={`/book/${book.id}`} className="search__book--link" key={book.id}>
+    <Link
+      href={`/book/${book.id}`}
+      className="search__book--link"
+      key={book.id}
+    >
       <audio
         src={book.audioLink}
         ref={audioRef}
@@ -35,7 +38,8 @@ function SearchBookItem({ book }: Props) {
               <BiTimeFive />
             </div>
             <div className="recommended__book--details-text">
-              {formatMinutes}:{formatSeconds}
+              {formatTime(duration).formatMinutes}:
+              {formatTime(duration).formatSeconds}
             </div>
           </div>
         </div>

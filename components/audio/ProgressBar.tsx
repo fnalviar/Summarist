@@ -23,8 +23,7 @@ function ProgressBar({
     }
   };
 
-  // const { formatTime } = useAudio(audioLink || "");
-  const { formatTime } = useAudio();
+  const { formatTime } = useAudio(audioLink || "");
 
   return (
     <div className="audio__progress--container">

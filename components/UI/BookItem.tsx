@@ -1,5 +1,5 @@
 import { initFirebase } from "@/firebase";
-import useAuth from "@/hooks/useAuth";
+import useAudio from "@/hooks/useAudio";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Book } from "@/types";
 import Link from "next/link";
@@ -8,30 +8,21 @@ import { BiTimeFive } from "react-icons/bi";
 
 interface Props {
   book: Book;
-  duration: number;
-  formatTime: (time: number) => {
-    formatMinutes: string;
-    formatSeconds: string;
-  };
-  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
-  onLoadedMetadata: () => void;
 }
 
-function BookItem({
-  book,
-  duration,
-  formatTime,
-  audioRef,
-  onLoadedMetadata,
-}: Props) {
-  const { user } = useAuth();
+function BookItem({ book }: Props) {
   const app = initFirebase();
   const subscription = useSubscription(app);
+
+  const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
+    book?.audioLink || ""
+  );
+  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <Link href={`/book/${book.id}`} key={book.id}>
       <div className="recommended--books--link">
-        {!user && book.subscriptionRequired && !subscription.isActive && (
+        {book.subscriptionRequired && subscription.isActive === false && (
           <div className="book--premium">Premium</div>
         )}
         <audio
@@ -51,8 +42,7 @@ function BookItem({
               <BiTimeFive className="recommended__book--details-icon" />
             </div>
             <div className="recommended__book--details-text">
-              {formatTime(duration).formatMinutes}:
-              {formatTime(duration).formatSeconds}
+              {formatMinutes}:{formatSeconds}
             </div>
           </div>
           <div className="recommended__book--details">

@@ -14,11 +14,7 @@ interface Props {
 function BookItem({ book }: Props) {
   const { user } = useAuth();
   const app = initFirebase();
-  let subscription = null;
-
-  if (user) {
-    subscription = useSubscription(app);
-  }
+  const subscription = useSubscription(app);
 
   const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
     book?.audioLink || ""
@@ -28,12 +24,14 @@ function BookItem({ book }: Props) {
   return (
     <Link href={`/book/${book.id}`} key={book.id}>
       <div className="recommended--books--link">
-        {user &&
+        {!user ? (
+          <div className="book--premium">Premium</div>
+        ) : (
           book.subscriptionRequired &&
-          subscription &&
-          !subscription.isActive && (
+          subscription.isActive === false && (
             <div className="book--premium">Premium</div>
-          )}
+          )
+        )}
         <audio
           src={book.audioLink}
           ref={audioRef}

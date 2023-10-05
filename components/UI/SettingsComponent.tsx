@@ -39,6 +39,9 @@ function SettingsComponent() {
     return <Authentication />;
   }
 
+  console.log("isUserPremium", isUserPremium);
+  console.log("premiumStatusName", premiumStatusName);
+
   return (
     <div className="container">
       <div className="row">

@@ -1,11 +1,9 @@
-import { initFirebase } from "@/firebase";
+import app from "@/firebase";
 import { getFunctions, httpsCallable } from "@firebase/functions";
 import {
   createCheckoutSession,
   getStripePayments,
 } from "@invertase/firestore-stripe-payments";
-
-const app = initFirebase();
 
 const payments = getStripePayments(app, {
   productsCollection: "products",

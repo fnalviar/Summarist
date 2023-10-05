@@ -15,8 +15,8 @@ function Summary({ bookSummary }: Props) {
   const modal = useSelector((state: RootState) => state.modal.value);
   const fontSize = useSelector((state: RootState) => state.fontSize.value);
 
-  {
-    modal && <Authentication />;
+  if (modal) {
+    return <Authentication />;
   }
 
   return (

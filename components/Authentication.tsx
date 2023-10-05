@@ -15,7 +15,7 @@ interface Inputs {
 function Authentication() {
   const [loginModal, setLoginModal] = useState(true);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
-  const { signIn, signUp, guestSignIn, loading } = useAuth();
+  const { signIn, signUp, guestSignIn, loading, error } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -81,6 +81,7 @@ function Authentication() {
           <>
             <div className="auth__content">
               <div className="auth__header">Log in to Summarist</div>
+              <div className="auth__error">{error}</div>
               <button
                 className="btn guest__btn--wrapper"
                 onClick={() => {
@@ -161,6 +162,7 @@ function Authentication() {
           <>
             <div className="auth__content">
               <div className="auth__header">Sign up to Summarist</div>
+              <div className="auth__error">{error}</div>
               <button className="btn google__btn--wrapper">
                 <div className="guest__icon--wrapper">
                   <FcGoogle className="google__icon" />

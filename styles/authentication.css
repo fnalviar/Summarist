@@ -179,6 +179,11 @@
   font-size: 28px;
 }
 
+.auth__error {
+  color: #f56c6c;
+  margin-bottom: 16px;
+}
+
 /* 
     FOR YOU 
   */

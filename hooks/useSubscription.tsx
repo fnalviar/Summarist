@@ -1,15 +1,21 @@
 import { FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  getFirestore,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export const useSubscription = (app: FirebaseApp) => {
   const db = getFirestore(app);
-  const [user] = useAuthState(getAuth(app));
+  const auth = getAuth(app);
+  const userId = auth.currentUser?.uid;
 
-  const subscriptionsRef = user
-    ? collection(db, "customers", user.uid, "subscriptions")
+  const subscriptionsRef = userId
+    ? collection(db, "customers", userId, "subscriptions")
     : null;
 
   const activeStatusQuery = useMemo(() => {
@@ -28,7 +34,7 @@ export const useSubscription = (app: FirebaseApp) => {
   });
 
   useEffect(() => {
-    if (!user || !activeStatusQuery) {
+    if (!userId || !activeStatusQuery) {
       setSubscriptionData({
         isActive: false,
         subscriptionName: "",
@@ -56,7 +62,7 @@ export const useSubscription = (app: FirebaseApp) => {
     return () => {
       unsubscribe();
     };
-  }, [user, activeStatusQuery]);
+  }, [userId, activeStatusQuery]);
 
   return subscriptionData;
 };

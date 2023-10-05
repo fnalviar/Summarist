@@ -1,46 +1,28 @@
-import { initFirebase } from "@/firebase";
+import app from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
-import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
-import SettingsLogin from "./SettingsLogin";
-import Link from "next/link";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/modalStore";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Authentication from "../Authentication";
+import SettingsLogin from "./SettingsLogin";
+import { getAuth } from "firebase/auth";
 
 function SettingsComponent() {
   const { user } = useAuth();
-
-  const app = initFirebase();
-  const auth = getAuth(app);
   const subscription = useSubscription(app);
 
-  const [isUserPremium, setUserPremium] = useState(false);
-  const [premiumStatusName, setPremiumStatusName] = useState("");
+  const isUserPremium = subscription.isActive;
+  const premiumStatusName = subscription.subscriptionName;
 
   const modal = useSelector((state: RootState) => state.modal.value);
-
-  useEffect(() => {
-    const checkPremium = async () => {
-      setUserPremium(subscription.isActive);
-      setPremiumStatusName(subscription.subscriptionName);
-    };
-
-    checkPremium();
-  }, [
-    app,
-    auth.currentUser?.uid,
-    subscription.isActive,
-    subscription.subscriptionName,
-  ]);
 
   if (modal) {
     return <Authentication />;
   }
 
-  console.log("isUserPremium", isUserPremium);
-  console.log("premiumStatusName", premiumStatusName);
+  if (subscription.isLoading) return;
 
   return (
     <div className="container">

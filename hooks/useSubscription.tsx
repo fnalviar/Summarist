@@ -3,38 +3,18 @@ import { getAuth } from "firebase/auth";
 import {
   collection,
   getFirestore,
-  onSnapshot,
   query,
   where,
+  getDocs,
 } from "firebase/firestore";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useSubscription = (app: FirebaseApp) => {
   const db = getFirestore(app);
-
   const auth = getAuth(app);
   const userId = auth.currentUser?.uid;
 
-  if (!userId) {
-    return {
-      isActive: false,
-      subscriptionName: "",
-    };
-  }
-
-  const subscriptionsRef = userId
-    ? collection(db, "customers", userId, "subscriptions")
-    : null;
-
-  const activeStatusQuery = useMemo(() => {
-    if (subscriptionsRef) {
-      return query(
-        subscriptionsRef,
-        where("status", "in", ["trialing", "active"])
-      );
-    }
-    return null;
-  }, [subscriptionsRef]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [subscriptionData, setSubscriptionData] = useState({
     isActive: false,
@@ -42,29 +22,34 @@ export const useSubscription = (app: FirebaseApp) => {
   });
 
   useEffect(() => {
-    if (!userId || !activeStatusQuery) return;
-
-    const unsubscribe = onSnapshot(
-      activeStatusQuery,
-      (snapshot) => {
-        if (snapshot.docs && snapshot.docs.length > 0) {
-          setSubscriptionData({ isActive: false, subscriptionName: "" });
-        } else {
-          const subscriptionDataResponse = snapshot.docs[0].data();
-          const subscriptionName =
-            subscriptionDataResponse.items[0]?.price?.product?.name || "";
-          setSubscriptionData({ isActive: true, subscriptionName });
+    const fetchData = async () => {
+      try {
+        if (!userId) {
+          setIsLoading(false);
+          return;
         }
-      },
-      (error) => {
+
+        const subscriptionsRef = collection(db, "customers", userId, "subscriptions");
+        const q = query(subscriptionsRef, where("status", "in", ["trialing", "active"]));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const subscriptionDataResponse = querySnapshot.docs[0].data();
+          const subscriptionName = subscriptionDataResponse.items[0]?.price?.product?.name || "";
+          setSubscriptionData({ isActive: true, subscriptionName });
+        } else {
+          setSubscriptionData({ isActive: false, subscriptionName: "" });
+        }
+
+        setIsLoading(false);
+      } catch (error) {
         console.error("Error fetching subscription data:", error);
+        setIsLoading(false);
       }
-    );
-
-    return () => {
-      unsubscribe();
     };
-  }, [userId, activeStatusQuery]);
 
-  return subscriptionData;
+    fetchData();
+  }, [userId, db]);
+
+  return { ...subscriptionData, isLoading };
 };

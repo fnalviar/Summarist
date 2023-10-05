@@ -1,4 +1,4 @@
-import { initFirebase } from "@/firebase";
+import app from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { modalOpen } from "@/redux/modalSlice";
@@ -30,7 +30,6 @@ function SummaryBook({
   const router = useRouter();
   const { user } = useAuth();
 
-  const app = initFirebase();
   const auth = getAuth(app);
   const subscription = useSubscription(app);
 

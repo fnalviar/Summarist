@@ -76,10 +76,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         setLoading(false);
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 
@@ -96,10 +95,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         setLoading(false);
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 
@@ -116,10 +114,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         setLoading(false);
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 
@@ -130,10 +127,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .then(() => {
         setUser(null);
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 

@@ -3,13 +3,14 @@ import useAudio from "@/hooks/useAudio";
 import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { Book } from "@/types";
+import { DocumentData } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Link from "next/link";
 import { AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 
 interface Props {
-  book: Book;
+  book: Book | DocumentData;
 }
 
 function BookItem({ book }: Props) {

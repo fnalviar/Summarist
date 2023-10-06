@@ -20,18 +20,13 @@ function BookItem({ book }: Props) {
   const { duration, formatTime, audioRef, onLoadedMetadata } = useAudio(
     book?.audioLink || ""
   );
-  const { formatMinutes, formatSeconds } = formatTime(duration);
 
   return (
     <Link href={`/book/${book.id}`} key={book.id}>
       <div className="recommended--books--link">
-        {!user ? (
+        {((!user && book.subscriptionRequired) ||
+          (book.subscriptionRequired && subscription.isActive === false)) && (
           <div className="book--premium">Premium</div>
-        ) : (
-          book.subscriptionRequired &&
-          subscription.isActive === false && (
-            <div className="book--premium">Premium</div>
-          )
         )}
         <audio
           src={book.audioLink}
@@ -50,7 +45,8 @@ function BookItem({ book }: Props) {
               <BiTimeFive className="recommended__book--details-icon" />
             </div>
             <div className="recommended__book--details-text">
-              {formatMinutes}:{formatSeconds}
+              {formatTime(duration).formatMinutes}:
+              {formatTime(duration).formatSeconds}
             </div>
           </div>
           <div className="recommended__book--details">

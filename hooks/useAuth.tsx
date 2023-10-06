@@ -69,11 +69,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        if (pathname === "" || pathname === "/") {
-          router.push("for-you");
-        } else {
-          router.push(pathname);
-        }
+
+        const redirectPath =
+          pathname === "" || pathname === "/" ? "/for-you" : pathname;
+        router.push(redirectPath);
         setLoading(false);
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))
@@ -89,11 +88,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
-        if (pathname === "" || pathname === "/") {
-          router.push("for-you");
-        } else {
-          router.push(pathname);
-        }
+        const redirectPath =
+          pathname === "" || pathname === "/" ? "/for-you" : pathname;
+        router.push(redirectPath);
         setLoading(false);
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))
@@ -109,11 +106,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signInAnonymously(auth)
       .then((userCredential) => {
         setUser(userCredential.user);
-        if (pathname === "" || pathname === "/") {
-          router.push("for-you");
-        } else {
-          router.push(pathname);
-        }
+        const redirectPath =
+          pathname === "" || pathname === "/" ? "/for-you" : pathname;
+        router.push(redirectPath);
         setLoading(false);
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))

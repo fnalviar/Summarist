@@ -78,7 +78,7 @@ function Sidebar() {
               <div className="sidebar__link--text">For you</div>
             </Link>
             <Link
-              href=""
+              href="/library"
               className="sidebar__link--wrapper sidebar__link--not-allowed"
             >
               <div
@@ -93,7 +93,7 @@ function Sidebar() {
             </Link>
             <Link
               href=""
-              className="sidebar__link--wrapper sidebar__link--not-allowed"
+              className="sidebar__link--wrapper"
             >
               <div className={`sidebar__link--line`}></div>
               <div className="sidebar__icon--wrapper">

@@ -1,10 +1,12 @@
-import app from "@/firebase";
+import app, { db } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { modalOpen } from "@/redux/modalSlice";
 import { Book } from "@/types";
+import { DocumentData, collection, onSnapshot } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { AiOutlineAudio, AiOutlineRead, AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 import { BsBookmark } from "react-icons/bs";
@@ -16,7 +18,7 @@ interface Props {
   formatMinutes: string;
   formatSeconds: string;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
-  onLoadedMetadata: () => void
+  onLoadedMetadata: () => void;
 }
 
 function SummaryBook({
@@ -33,6 +35,10 @@ function SummaryBook({
   const auth = getAuth(app);
   const subscription = useSubscription(app);
 
+  const [book, setBook] = useState<DocumentData | Book>();
+  const [bookList, setBookList] = useState<DocumentData[] | Book[]>([]);
+  const [addedToList, setAddedToList] = useState(false);
+
   const noUserHandler = () => {
     if (!user) {
       dispatch(modalOpen());
@@ -45,6 +51,25 @@ function SummaryBook({
       router.push(`/player/${bookSummary?.id}`);
     }
   };
+
+  // Find all books in user's list
+  useEffect(() => {
+    if (user) {
+      return onSnapshot(
+        collection(db, "customers", user.uid, "myList"),
+        (snapshot) => setBookList(snapshot.docs)
+      );
+    }
+  }, [db, book?.id]);
+
+  // Check if book is already in user's list
+  useEffect(
+    () =>
+      setAddedToList(
+        bookList.findIndex((result) => result.data().id === book?.id) !== -1
+      ),
+    [bookList]
+  );
 
   return (
     <div className="row">

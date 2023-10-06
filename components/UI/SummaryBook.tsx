@@ -3,13 +3,20 @@ import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
 import { modalOpen } from "@/redux/modalSlice";
 import { Book } from "@/types";
-import { DocumentData, collection, onSnapshot } from "@firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  setDoc,
+} from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AiOutlineAudio, AiOutlineRead, AiOutlineStar } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { useDispatch } from "react-redux";
 
@@ -35,7 +42,9 @@ function SummaryBook({
   const auth = getAuth(app);
   const subscription = useSubscription(app);
 
-  const [book, setBook] = useState<DocumentData | Book>();
+  const [book, setBook] = useState<DocumentData | Book | null>(
+    bookSummary || null
+  );
   const [bookList, setBookList] = useState<DocumentData[] | Book[]>([]);
   const [addedToList, setAddedToList] = useState(false);
 
@@ -54,6 +63,8 @@ function SummaryBook({
 
   // Find all books in user's list
   useEffect(() => {
+    if (!book) return;
+
     if (user) {
       return onSnapshot(
         collection(db, "customers", user.uid, "myList"),
@@ -63,13 +74,36 @@ function SummaryBook({
   }, [db, book?.id]);
 
   // Check if book is already in user's list
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (bookList && book && book.id) {
       setAddedToList(
-        bookList.findIndex((result) => result.data().id === book?.id) !== -1
-      ),
-    [bookList]
-  );
+        /*
+          Checks if the id in bookList matched the object's book id
+          if it finds a match, it returns the index of that element 
+          and setAddedToList to true
+          otherwise, it returns -1 which is set to false
+        */
+        bookList.findIndex((result) => result.data().id === book.id) !== -1
+      );
+    }
+  }, [bookList]);
+
+  const handleList = async () => {
+    if (user && book && book.id) {
+      if (addedToList) {
+        await deleteDoc(
+          doc(db, "customers", user!.uid, "myList", book?.id.toString())
+        );
+      } else {
+        await setDoc(
+          doc(db, "customers", user!.uid, "myList", book?.id.toString()),
+          {
+            ...book,
+          }
+        );
+      }
+    }
+  };
 
   return (
     <div className="row">
@@ -157,13 +191,26 @@ function SummaryBook({
               </button>
             </div>
 
-            <div className="bookmark__container">
-              <div className="bookmark__icon">
-                <BsBookmark />
-              </div>
-              <div className="bookmark__description">
-                Add title to My Library
-              </div>
+            <div className="bookmark__container" onClick={handleList}>
+              {addedToList ? (
+                <>
+                  <div className="bookmark__icon">
+                    <BsFillBookmarkCheckFill />
+                  </div>
+                  <div className="bookmark__description">
+                    Saved to My Library
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bookmark__icon">
+                    <BsBookmark />
+                  </div>
+                  <div className="bookmark__description">
+                    Add book to My Library
+                  </div>
+                </>
+              )}
             </div>
 
             <h2 className="book--about__container">{"What's"} it about?</h2>

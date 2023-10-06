@@ -77,10 +77,8 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">For you</div>
             </Link>
-            <Link
-              href="/library"
-              className="sidebar__link--wrapper sidebar__link--not-allowed"
-            >
+
+            <Link href="/library" className="sidebar__link--wrapper">
               <div
                 className={`sidebar__link--line ${
                   pathname === "/library" ? "active--tab" : ""
@@ -91,9 +89,10 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">My Library</div>
             </Link>
+
             <Link
               href=""
-              className="sidebar__link--wrapper"
+              className="sidebar__link--wrapper sidebar__link--not-allowed"
             >
               <div className={`sidebar__link--line`}></div>
               <div className="sidebar__icon--wrapper">
@@ -101,6 +100,7 @@ function Sidebar() {
               </div>
               <div className="sidebar__link--text">Highlights</div>
             </Link>
+
             <Link
               href=""
               className="sidebar__link--wrapper sidebar__link--not-allowed"

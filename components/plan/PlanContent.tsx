@@ -24,8 +24,8 @@ function PlanContent() {
 
     const priceId =
       selectedPlan === "yearly"
-        ? "price_1Nm2ujFFiX3mGzMGMtZmu8Eu"
-        : "price_1Nm2vUFFiX3mGzMGo53a8kyl";
+        ? "price_1Nm2vUFFiX3mGzMGo53a8kyl"
+        : "price_1Nm2ujFFiX3mGzMGMtZmu8Eu";
 
     createCheckoutSession(user.uid, priceId);
   };

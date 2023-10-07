@@ -74,11 +74,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           pathname === "" || pathname === "/" ? "/for-you" : pathname;
         router.push(redirectPath);
         setLoading(false);
+        dispatch(modalClose());
+
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 
@@ -92,11 +93,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           pathname === "" || pathname === "/" ? "/for-you" : pathname;
         router.push(redirectPath);
         setLoading(false);
+        dispatch(modalClose());
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 
@@ -110,11 +111,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           pathname === "" || pathname === "/" ? "/for-you" : pathname;
         router.push(redirectPath);
         setLoading(false);
+        dispatch(modalClose());
       })
       .catch((error) => setError(error.message.replace("Firebase: ", "")))
       .finally(() => {
         setLoading(false);
-        dispatch(modalClose());
       });
   };
 

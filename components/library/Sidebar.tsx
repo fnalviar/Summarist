@@ -112,46 +112,58 @@ function Sidebar() {
               <div className="sidebar__link--text">Search</div>
             </Link>
 
-            <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
-              <div
-                className={`sidebar__link--text sidebar__font--size-icon
-                ${fontSize === "16px" ? "sidebar__font--size-icon--active" : ""}
-                `}
-                onClick={() => dispatch(fontSizeSmall())}
-              >
-                <RxLetterCaseCapitalize className="sidebar__font--size-icon-small" />
+            {pathname && pathname.startsWith("/player") && (
+              <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
+                <div
+                  className={`sidebar__link--text sidebar__font--size-icon
+                    ${
+                      fontSize === "16px"
+                        ? "sidebar__font--size-icon--active"
+                        : ""
+                    }
+                    `}
+                  onClick={() => dispatch(fontSizeSmall())}
+                >
+                  <RxLetterCaseCapitalize className="sidebar__font--size-icon-small" />
+                </div>
+                <div
+                  className={`sidebar__link--text sidebar__font--size-icon
+                     ${
+                       fontSize === "18px"
+                         ? "sidebar__font--size-icon--active"
+                         : ""
+                     }
+                     `}
+                  onClick={() => dispatch(fontSizeMedium())}
+                >
+                  <RxLetterCaseCapitalize className="sidebar__font--size-icon-medium" />
+                </div>
+                <div
+                  className={`sidebar__link--text sidebar__font--size-icon
+                     ${
+                       fontSize === "22px"
+                         ? "sidebar__font--size-icon--active"
+                         : ""
+                     }
+                     `}
+                  onClick={() => dispatch(fontSizeLarge())}
+                >
+                  <RxLetterCaseCapitalize className="sidebar__font--size-icon-large" />
+                </div>
+                <div
+                  className={`sidebar__link--text sidebar__font--size-icon
+                     ${
+                       fontSize === "26px"
+                         ? "sidebar__font--size-icon--active"
+                         : ""
+                     }
+                     `}
+                  onClick={() => dispatch(fontSizeXLarge())}
+                >
+                  <RxLetterCaseCapitalize className="sidebar__font--size-icon-xlarge" />
+                </div>
               </div>
-              <div
-                className={`sidebar__link--text sidebar__font--size-icon
-                 ${
-                   fontSize === "18px" ? "sidebar__font--size-icon--active" : ""
-                 }
-                 `}
-                onClick={() => dispatch(fontSizeMedium())}
-              >
-                <RxLetterCaseCapitalize className="sidebar__font--size-icon-medium" />
-              </div>
-              <div
-                className={`sidebar__link--text sidebar__font--size-icon
-                 ${
-                   fontSize === "22px" ? "sidebar__font--size-icon--active" : ""
-                 }
-                 `}
-                onClick={() => dispatch(fontSizeLarge())}
-              >
-                <RxLetterCaseCapitalize className="sidebar__font--size-icon-large" />
-              </div>
-              <div
-                className={`sidebar__link--text sidebar__font--size-icon
-                 ${
-                   fontSize === "26px" ? "sidebar__font--size-icon--active" : ""
-                 }
-                 `}
-                onClick={() => dispatch(fontSizeXLarge())}
-              >
-                <RxLetterCaseCapitalize className="sidebar__font--size-icon-xlarge" />
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="sidebar__bottom">

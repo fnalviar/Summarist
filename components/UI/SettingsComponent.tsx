@@ -1,13 +1,8 @@
 import app from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import { useSubscription } from "@/hooks/useSubscription";
-import { RootState } from "@/redux/modalStore";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Authentication from "../Authentication";
 import SettingsLogin from "./SettingsLogin";
-import { getAuth } from "firebase/auth";
 
 function SettingsComponent() {
   const { user } = useAuth();
@@ -15,12 +10,6 @@ function SettingsComponent() {
 
   const isUserPremium = subscription.isActive;
   const premiumStatusName = subscription.subscriptionName;
-
-  const modal = useSelector((state: RootState) => state.modal.value);
-
-  if (modal) {
-    return <Authentication />;
-  }
 
   if (subscription.isLoading) return;
 

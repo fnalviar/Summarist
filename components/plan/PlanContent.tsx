@@ -10,7 +10,7 @@ function PlanContent() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [activePlan, setActivePlan] = useState<string>("yearly");
-  const [selectedPlan, setSelectedPlan] = useState<string>("");
+  const [selectedPlan, setSelectedPlan] = useState<string>("yearly");
 
   const handleActivePlan = (planName: string) => {
     setActivePlan(planName);
@@ -24,8 +24,8 @@ function PlanContent() {
 
     const priceId =
       selectedPlan === "yearly"
-        ? "price_1Nm2vUFFiX3mGzMGo53a8kyl"
-        : "price_1Nm2ujFFiX3mGzMGMtZmu8Eu";
+        ? "price_1Nm2ujFFiX3mGzMGMtZmu8Eu"
+        : "price_1Nm2vUFFiX3mGzMGo53a8kyl";
 
     createCheckoutSession(user.uid, priceId);
   };

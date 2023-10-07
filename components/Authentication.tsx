@@ -204,7 +204,13 @@ function Authentication() {
                     setLoginModal(false);
                   }}
                 >
-                  <span>Sign Up</span>
+                  {loading ? (
+                    <span>
+                      <AiOutlineLoading3Quarters className="loading__icon" />
+                    </span>
+                  ) : (
+                    <span>Sign Up</span>
+                  )}
                 </button>
               </form>
             </div>
